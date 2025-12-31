@@ -44,7 +44,10 @@ je base_case
 movl %edi, save_edi
 movl %eax, save_eax
 movl $dec_table, %edi
-movl %ecx, tmp_dest
+movl %esi, save_esi
+movl %ecx, %esi
+movl %esi, tmp_dest
+movl save_esi, %esi
 movl $0, tmp_ans
 movl $0, %eax
 movb tmp_dest+0, %al
@@ -68,9 +71,12 @@ movb %al, tmp_ans+3
 cmpb $255, %al
 jne fin_dec0
 fin_dec0:
-movl tmp_ans, %ecx
 movl save_eax, %eax
 movl save_edi, %edi
+movl %esi, save_esi
+movl tmp_ans, %esi
+movl %esi, %ecx
+movl save_esi, %esi
 pushl %edx
 pushl %ecx
 call comb
@@ -81,7 +87,10 @@ pushl %eax
 movl %edi, save_edi
 movl %eax, save_eax
 movl $dec_table, %edi
-movl %edx, tmp_dest
+movl %esi, save_esi
+movl %edx, %esi
+movl %esi, tmp_dest
+movl save_esi, %esi
 movl $0, tmp_ans
 movl $0, %eax
 movb tmp_dest+0, %al
@@ -105,9 +114,12 @@ movb %al, tmp_ans+3
 cmpb $255, %al
 jne fin_dec1
 fin_dec1:
-movl tmp_ans, %edx
 movl save_eax, %eax
 movl save_edi, %edi
+movl %esi, save_esi
+movl tmp_ans, %esi
+movl %esi, %edx
+movl save_esi, %esi
 pushl %edx
 pushl %ecx
 call comb
@@ -120,8 +132,14 @@ movl %ecx, save_ecx
 movl %edi, save_edi
 movl $0, carryval
 movl $0, tmp_ans
-movl 0(%esp), tmp_src
-movl %eax, tmp_dest
+movl %esi, save_esi
+movl 0(%esp), %esi
+movl %esi, tmp_src
+movl save_esi, %esi
+movl %esi, save_esi
+movl %eax, %esi
+movl %esi, tmp_dest
+movl save_esi, %esi
 movl carryval, %ebx
 movl addp(, %ebx, 4), %edi
 movl $0, %ecx
@@ -162,19 +180,28 @@ movb %al, tmp_ans+3
 movl carryp(, %ebx, 4), %edi
 movb (%edi, %ecx), %al
 movb %al, carryval+0
-movl %eax, save_eax
-movl %ebx, save_ebx
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl tmp_ans, %eax
+movl save_eax, %eax
+movl save_ebx, %ebx
+movl save_ecx, %ecx
+movl save_edi, %edi
+movl %esi, save_esi
+movl tmp_ans, %esi
+movl %esi, %eax
+movl save_esi, %esi
 jmp combr
 
 bad_case:
 movl %eax, save_eax
 movl %ecx, save_ecx
 movl %edi, save_edi
-movl %eax, tmp_src
-movl %eax, tmp_dest
+movl %esi, save_esi
+movl %eax, %esi
+movl %esi, tmp_src
+movl save_esi, %esi
+movl %esi, save_esi
+movl %eax, %esi
+movl %esi, tmp_dest
+movl save_esi, %esi
 movl $0, tmp_ans
 movl $xor_table, %edi
 movl $0, %ecx
@@ -197,7 +224,10 @@ movb %al, tmp_ans+3
 movl save_edi, %edi
 movl save_ecx, %ecx
 movl save_eax, %eax
-movl tmp_ans, %eax
+movl %esi, save_esi
+movl tmp_ans, %esi
+movl %esi, %eax
+movl save_esi, %esi
 jmp combr
 base_case:
 movl $1, %eax
@@ -224,8 +254,14 @@ movl %ecx, save_ecx
 movl %edi, save_edi
 movl $0, carryval
 movl $0, tmp_ans
-movl $4, tmp_src
-movl %esp, tmp_dest
+movl %esi, save_esi
+movl $4, %esi
+movl %esi, tmp_src
+movl save_esi, %esi
+movl %esi, save_esi
+movl %esp, %esi
+movl %esi, tmp_dest
+movl save_esi, %esi
 movl carryval, %ebx
 movl addp(, %ebx, 4), %edi
 movl $0, %ecx
@@ -266,19 +302,28 @@ movb %al, tmp_ans+3
 movl carryp(, %ebx, 4), %edi
 movb (%edi, %ecx), %al
 movb %al, carryval+0
-movl %eax, save_eax
-movl %ebx, save_ebx
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl tmp_ans, %esp
+movl save_eax, %eax
+movl save_ebx, %ebx
+movl save_ecx, %ecx
+movl save_edi, %edi
+movl %esi, save_esi
+movl tmp_ans, %esi
+movl %esi, %esp
+movl save_esi, %esi
 movl %eax, save_eax
 movl %ebx, save_ebx
 movl %ecx, save_ecx
 movl %edi, save_edi
 movl $0, carryval
 movl $0, tmp_ans
-movl $4, tmp_src
-movl %esp, tmp_dest
+movl %esi, save_esi
+movl $4, %esi
+movl %esi, tmp_src
+movl save_esi, %esi
+movl %esi, save_esi
+movl %esp, %esi
+movl %esi, tmp_dest
+movl save_esi, %esi
 movl carryval, %ebx
 movl addp(, %ebx, 4), %edi
 movl $0, %ecx
@@ -319,11 +364,14 @@ movb %al, tmp_ans+3
 movl carryp(, %ebx, 4), %edi
 movb (%edi, %ecx), %al
 movb %al, carryval+0
-movl %eax, save_eax
-movl %ebx, save_ebx
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl tmp_ans, %esp
+movl save_eax, %eax
+movl save_ebx, %ebx
+movl save_ecx, %ecx
+movl save_edi, %edi
+movl %esi, save_esi
+movl tmp_ans, %esi
+movl %esi, %esp
+movl save_esi, %esi
 
 pushl %eax
 pushl $fstring
@@ -339,8 +387,14 @@ movl $1, %eax
 movl %eax, save_eax
 movl %ecx, save_ecx
 movl %edi, save_edi
-movl %ebx, tmp_src
-movl %ebx, tmp_dest
+movl %esi, save_esi
+movl %ebx, %esi
+movl %esi, tmp_src
+movl save_esi, %esi
+movl %esi, save_esi
+movl %ebx, %esi
+movl %esi, tmp_dest
+movl save_esi, %esi
 movl $0, tmp_ans
 movl $xor_table, %edi
 movl $0, %ecx
@@ -363,5 +417,8 @@ movb %al, tmp_ans+3
 movl save_edi, %edi
 movl save_ecx, %ecx
 movl save_eax, %eax
-movl tmp_ans, %ebx
+movl %esi, save_esi
+movl tmp_ans, %esi
+movl %esi, %ebx
+movl save_esi, %esi
 int $0x80
