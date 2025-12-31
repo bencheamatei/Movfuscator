@@ -285,7 +285,7 @@ def main():
         if line==".data":
             fout.write(line+"\n")
             for x in ["and", "or", "xor", "not", "inc", "dec", "add", "carry", "sub", "carry_sub"]:
-                fout.write(f"{x}_table: .incbin "+'"'+f"bins/{x}.bin"+'"'+"\n")
+                fout.write(f"{x}_table: .incbin "+'"'+f"bin/{x}.bin"+'"'+"\n")
                 if x!="carry" and x!="carry_sub":
                     cnt[x]=0
             fout.write("addp: .long add_table, add_table+65536"+"\n")
