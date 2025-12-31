@@ -4,7 +4,12 @@ or_table: .incbin "or.bin"
 xor_table: .incbin "xor.bin"
 not_table: .incbin "not.bin"
 inc_table: .incbin "inc.bin"
-save_eax: .space 4
+dec_table: .incbin "dec.bin"
+add_table: .incbin "add.bin"
+carry_table: .incbin "carry.bin"
+addp: .long add_table, add_table+65536
+carryp: .long carry_table, carry_table+65536
+carryval: .space 4save_eax: .space 4
 save_ebx: .space 4
 save_ecx: .space 4
 save_edx: .space 4
@@ -18,7 +23,44 @@ n: .long 10
 .text
 .global main
 main:
-movl $255, %ecx
+
+movl %eax, save_eax
+movl %ecx, save_ecx
+movl %edi, save_edi
+movl %ecx, tmp_src
+movl %ecx, tmp_dest
+movl $0, tmp_ans
+movl $xor_table, %edi
+movl $0, %ecx
+movb tmp_src+0, %ch
+movb tmp_dest+0, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+0
+movb tmp_src+1, %ch
+movb tmp_dest+1, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+1
+movb tmp_src+2, %ch
+movb tmp_dest+2, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+2
+movb tmp_src+3, %ch
+movb tmp_dest+3, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+3
+movl save_edi, %edi
+movl save_ecx, %ecx
+movl save_eax, %eax
+movl tmp_ans, %ecx
+et_loop:
+cmp n, %ecx
+je et_exit
+
+pushl %ecx
+pushl $fs
+call printf
+addl $8, %esp
+
 movl %edi, save_edi
 movl %eax, save_eax
 movl $inc_table, %edi
@@ -29,32 +71,28 @@ movb tmp_dest+0, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+0
 cmpb $0, %al
-jne fin_inc
+jne fin_inc0
 movb tmp_dest+1, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+1
 cmpb $0, %al
-jne fin_inc
+jne fin_inc0
 movb tmp_dest+2, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+2
 cmpb $0, %al
-jne fin_inc
+jne fin_inc0
 movb tmp_dest+3, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+3
 cmpb $0, %al
-jne fin_inc
-fin_inc:
+jne fin_inc0
+fin_inc0:
 movl tmp_ans, %ecx
 movl save_eax, %eax
 movl save_edi, %edi
-
-pushl %ecx
-pushl $fs
-call printf
-addl $8, %esp
-
+jmp et_loop
+et_exit:
 movl $1, %eax
 movl %eax, save_eax
 movl %ecx, save_ecx
