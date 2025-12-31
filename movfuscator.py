@@ -14,8 +14,17 @@ def write_xor(src,dest):
     save_reg("eax")
     save_reg("ecx")
     save_reg("edi")
-    fout.write(f"movl {src}, tmp_src"+"\n")
-    fout.write(f"movl {dest}, tmp_dest"+"\n")
+
+    save_reg("esi")
+    fout.write(f"movl {src}, %esi"+"\n")
+    fout.write(f"movl %esi, tmp_src"+"\n")
+    get_reg("esi")
+
+    save_reg("esi")
+    fout.write(f"movl {dest}, %esi"+"\n")
+    fout.write(f"movl %esi, tmp_dest"+"\n")
+    get_reg("esi")
+
     fout.write(f"movl $0, tmp_ans"+"\n")
     fout.write(f"movl $xor_table, %edi"+"\n")
     fout.write("movl $0, %ecx"+"\n")
@@ -28,14 +37,25 @@ def write_xor(src,dest):
     get_reg("edi")
     get_reg("ecx")  
     get_reg("eax")
-    fout.write(f"movl tmp_ans, {dest}"+"\n")
+
+    save_reg("esi")
+    fout.write(f"movl tmp_ans, %esi"+"\n")
+    fout.write(f"movl %esi, {dest}"+"\n")
+    if dest!="%esi":
+        get_reg("esi")
 
 def write_and(src,dest):
     save_reg("eax")
     save_reg("ecx")
     save_reg("edi")
-    fout.write(f"movl {src}, tmp_src"+"\n")
-    fout.write(f"movl {dest}, tmp_dest"+"\n")
+    save_reg("esi")
+    fout.write(f"movl {src}, %esi"+"\n")
+    fout.write(f"movl %esi, tmp_src"+"\n")
+    get_reg("esi")
+    save_reg("esi")
+    fout.write(f"movl {dest}, %esi"+"\n")
+    fout.write(f"movl %esi, tmp_dest"+"\n")
+    get_reg("esi")
     fout.write(f"movl $0, tmp_ans"+"\n")
     fout.write(f"movl $and_table, %edi"+"\n")
     fout.write("movl $0, %ecx"+"\n")
@@ -48,14 +68,25 @@ def write_and(src,dest):
     get_reg("edi")
     get_reg("ecx")  
     get_reg("eax")
-    fout.write(f"movl tmp_ans, {dest}"+"\n")
+
+    save_reg("esi")
+    fout.write(f"movl tmp_ans, %esi"+"\n")
+    fout.write(f"movl %esi, {dest}"+"\n")
+    if dest!="%esi":
+        get_reg("esi")
 
 def write_or(src,dest):
     save_reg("eax")
     save_reg("ecx")
     save_reg("edi")
-    fout.write(f"movl {src}, tmp_src"+"\n")
-    fout.write(f"movl {dest}, tmp_dest"+"\n")
+    save_reg("esi")
+    fout.write(f"movl {src}, %esi"+"\n")
+    fout.write(f"movl %esi, tmp_src"+"\n")
+    get_reg("esi")
+    save_reg("esi")
+    fout.write(f"movl {dest}, %esi"+"\n")
+    fout.write(f"movl %esi, tmp_dest"+"\n")
+    get_reg("esi")
     fout.write(f"movl $0, tmp_ans"+"\n")
     fout.write(f"movl $or_table, %edi"+"\n")
     fout.write("movl $0, %ecx"+"\n")
@@ -68,13 +99,21 @@ def write_or(src,dest):
     get_reg("edi")
     get_reg("ecx")  
     get_reg("eax")
-    fout.write(f"movl tmp_ans, {dest}"+"\n")
+    
+    save_reg("esi")
+    fout.write(f"movl tmp_ans, %esi"+"\n")
+    fout.write(f"movl %esi, {dest}"+"\n")
+    if dest!="%esi":
+        get_reg("esi")
 
 def write_not(dest):
     save_reg("eax")
     save_reg("ecx")
     save_reg("edi")
-    fout.write(f"movl {dest}, tmp_dest"+"\n")
+    save_reg("esi")
+    fout.write(f"movl {dest}, %esi"+"\n")
+    fout.write(f"movl %esi, tmp_dest"+"\n")
+    get_reg("esi")
     fout.write(f"movl $0, tmp_ans"+"\n")
     fout.write(f"movl $not_table, %edi"+"\n")
     fout.write("movl $0, %ecx"+"\n")
@@ -86,7 +125,12 @@ def write_not(dest):
     get_reg("edi")
     get_reg("ecx")  
     get_reg("eax")
-    fout.write(f"movl tmp_ans, {dest}"+"\n")
+    save_reg("esi")
+
+    fout.write(f"movl tmp_ans, %esi"+"\n")
+    fout.write(f"movl %esi, {dest}"+"\n")
+    if dest!="%esi":
+        get_reg("esi")
 
 def write_inc(dest):
     # de aici incepe chestia sa nu fie kinda trivial
@@ -98,7 +142,10 @@ def write_inc(dest):
     save_reg("edi")
     save_reg("eax")
     fout.write("movl $inc_table, %edi"+"\n")
-    fout.write(f"movl {dest}, tmp_dest"+"\n")
+    save_reg("esi")
+    fout.write(f"movl {dest}, %esi"+"\n")
+    fout.write(f"movl %esi, tmp_dest"+"\n")
+    get_reg("esi")
     fout.write("movl $0, tmp_ans"+"\n")
     fout.write("movl $0, %eax"+"\n")
     s="fin_inc"+str(cnt["inc"])
@@ -112,9 +159,14 @@ def write_inc(dest):
 
     cnt["inc"]+=1
     fout.write(f"{s}:"+"\n")
-    fout.write(f"movl tmp_ans, {dest}"+"\n")
     get_reg("eax")
     get_reg("edi")
+
+    save_reg("esi")
+    fout.write(f"movl tmp_ans, %esi"+"\n")
+    fout.write(f"movl %esi, {dest}"+"\n")
+    if dest!="%esi":
+        get_reg("esi")
 
 def write_dec(dest):
     # e logica extrem de asemanatoare ca la inc 
@@ -123,7 +175,10 @@ def write_dec(dest):
     save_reg("edi")
     save_reg("eax")
     fout.write("movl $dec_table, %edi"+"\n")
-    fout.write(f"movl {dest}, tmp_dest"+"\n")
+    save_reg("esi")
+    fout.write(f"movl {dest}, %esi"+"\n")
+    fout.write(f"movl %esi, tmp_dest"+"\n")
+    get_reg("esi")
     fout.write("movl $0, tmp_ans"+"\n")
     fout.write("movl $0, %eax"+"\n")
     s="fin_dec"+str(cnt["dec"])
@@ -137,9 +192,15 @@ def write_dec(dest):
 
     cnt["dec"]+=1
     fout.write(f"{s}:"+"\n")
-    fout.write(f"movl tmp_ans, {dest}"+"\n")
     get_reg("eax")
     get_reg("edi")
+
+    save_reg("esi")
+    fout.write(f"movl tmp_ans, %esi"+"\n")
+    fout.write(f"movl %esi, {dest}"+"\n")
+    if dest!="%esi":
+        get_reg("esi")
+
 
 def write_add(src, dest):
     save_reg("eax")
@@ -148,8 +209,14 @@ def write_add(src, dest):
     save_reg("edi")
     fout.write("movl $0, carryval"+"\n")
     fout.write("movl $0, tmp_ans"+"\n")
-    fout.write(f"movl {src}, tmp_src"+"\n")
-    fout.write(f"movl {dest}, tmp_dest"+"\n")
+    save_reg("esi")
+    fout.write(f"movl {src}, %esi"+"\n")
+    fout.write(f"movl %esi, tmp_src"+"\n")
+    get_reg("esi")
+    save_reg("esi")
+    fout.write(f"movl {dest}, %esi"+"\n")
+    fout.write(f"movl %esi, tmp_dest"+"\n")
+    get_reg("esi")
     for i in range(4):
         fout.write("movl carryval, %ebx"+"\n")
         fout.write("movl addp(, %ebx, 4), %edi"+"\n")
@@ -162,14 +229,54 @@ def write_add(src, dest):
         fout.write("movl carryp(, %ebx, 4), %edi"+"\n")
         fout.write("movb (%edi, %ecx), %al"+"\n")
         fout.write("movb %al, carryval+0"+"\n")
+    get_reg("eax")
+    get_reg("ebx")
+    get_reg("ecx")
+    get_reg("edi")
+
+    save_reg("esi")
+    fout.write(f"movl tmp_ans, %esi"+"\n")
+    fout.write(f"movl %esi, {dest}"+"\n")
+    if dest!="%esi":
+        get_reg("esi")
+
+def write_sub(src,dest):
     save_reg("eax")
     save_reg("ebx")
     save_reg("ecx")
     save_reg("edi")
-    fout.write(f"movl tmp_ans, {dest}"+"\n")
+    fout.write("movl $0, carryval"+"\n")
+    fout.write("movl $0, tmp_ans"+"\n")
+    save_reg("esi")
+    fout.write(f"movl {src}, %esi"+"\n")
+    fout.write(f"movl %esi, tmp_src"+"\n")
+    get_reg("esi")
+    save_reg("esi")
+    fout.write(f"movl {dest}, %esi"+"\n")
+    fout.write(f"movl %esi, tmp_dest"+"\n")
+    get_reg("esi")
+    for i in range(4):
+        fout.write("movl carryval, %ebx"+"\n")
+        fout.write("movl subp(, %ebx, 4), %edi"+"\n")
+        fout.write("movl $0, %ecx"+"\n")
+        fout.write(f"movb tmp_src+{i}, %cl"+"\n")
+        fout.write(f"movb tmp_dest+{i}, %ch"+"\n")
+        fout.write("movb (%edi, %ecx), %al"+"\n")
+        fout.write(f"movb %al, tmp_ans+{i}"+"\n")
+        # acum trebuie sa vad daca am carry 
+        fout.write("movl carry_subp(, %ebx, 4), %edi"+"\n")
+        fout.write("movb (%edi, %ecx), %al"+"\n")
+        fout.write("movb %al, carryval+0"+"\n")
+    get_reg("eax")
+    get_reg("ebx")
+    get_reg("ecx")
+    get_reg("edi")
 
-def write_sub(src,dest):
-    pass
+    save_reg("esi")
+    fout.write(f"movl tmp_ans, %esi"+"\n")
+    fout.write(f"movl %esi, {dest}"+"\n")
+    if dest!="%esi":
+        get_reg("esi")
 
 def main():
     for line in fin:
@@ -177,13 +284,17 @@ def main():
         line=line.rstrip()
         if line==".data":
             fout.write(line+"\n")
-            for x in ["and", "or", "xor", "not", "inc", "dec", "add", "carry"]:
-                fout.write(f"{x}_table: .incbin "+'"'+f"{x}.bin"+'"'+"\n")
-                if x!="carry":
+            for x in ["and", "or", "xor", "not", "inc", "dec", "add", "carry", "sub", "carry_sub"]:
+                fout.write(f"{x}_table: .incbin "+'"'+f"bins/{x}.bin"+'"'+"\n")
+                if x!="carry" and x!="carry_sub":
                     cnt[x]=0
             fout.write("addp: .long add_table, add_table+65536"+"\n")
             fout.write("carryp: .long carry_table, carry_table+65536"+"\n")
             fout.write("carryval: .space 4"+"\n")
+
+            fout.write("subp: .long sub_table, sub_table+65536"+"\n")
+            fout.write("carry_subp: .long carry_sub_table, carry_sub_table+65536"+"\n")
+
             for x in ["eax", "ebx", "ecx", "edx", "esi", "edi"]:
                 fout.write(f"save_{x}: .space 4"+"\n")
             fout.write("tmp_src: .space 4"+"\n")
@@ -261,6 +372,17 @@ def main():
                 b=b.strip()
                 b=b.lstrip()
                 write_add(a,b)
+            elif line[:3]=="sub" or line[:4]=="subl":
+                if line[:4]=="subl":
+                    line=line[5:]
+                else:
+                    line=line[4:]
+                a,b=list(line.split(","))
+                a=a.strip()
+                a=a.lstrip()
+                b=b.strip()
+                b=b.lstrip()
+                write_sub(a,b)
             else:
                 fout.write(line+"\n")
 
