@@ -2,6 +2,7 @@ import sys
 
 fin=open("main.s","r")
 fout=open("main_mov.s","w")
+cnt={} # counter de etichete
 
 def save_reg(reg):
     fout.write(f"movl %{reg}, save_{reg}"+"\n")
@@ -20,25 +21,169 @@ def write_xor(src,dest):
     fout.write("movl $0, %ecx"+"\n")
     for i in range(4):
         fout.write(f"movb tmp_src+{i}, %ch"+"\n")
-        fout.write(f"movb tmp_src+{i}, %cl"+"\n")
+        fout.write(f"movb tmp_dest+{i}, %cl"+"\n")
         fout.write(f"movb (%edi, %ecx), %al"+"\n")
         fout.write(f"movb %al, tmp_ans+{i}"+"\n")
 
     get_reg("edi")
     get_reg("ecx")  
     get_reg("eax")
+    fout.write(f"movl tmp_ans, {dest}"+"\n")
+
+def write_and(src,dest):
+    save_reg("eax")
+    save_reg("ecx")
     save_reg("edi")
-    fout.write(f"movl tmp_ans, %edi"+"\n")
-    fout.write(f"movl %edi, {dest}"+"\n")
+    fout.write(f"movl {src}, tmp_src"+"\n")
+    fout.write(f"movl {dest}, tmp_dest"+"\n")
+    fout.write(f"movl $0, tmp_ans"+"\n")
+    fout.write(f"movl $and_table, %edi"+"\n")
+    fout.write("movl $0, %ecx"+"\n")
+    for i in range(4):
+        fout.write(f"movb tmp_src+{i}, %ch"+"\n")
+        fout.write(f"movb tmp_dest+{i}, %cl"+"\n")
+        fout.write(f"movb (%edi, %ecx), %al"+"\n")
+        fout.write(f"movb %al, tmp_ans+{i}"+"\n")
+
     get_reg("edi")
+    get_reg("ecx")  
+    get_reg("eax")
+    fout.write(f"movl tmp_ans, {dest}"+"\n")
+
+def write_or(src,dest):
+    save_reg("eax")
+    save_reg("ecx")
+    save_reg("edi")
+    fout.write(f"movl {src}, tmp_src"+"\n")
+    fout.write(f"movl {dest}, tmp_dest"+"\n")
+    fout.write(f"movl $0, tmp_ans"+"\n")
+    fout.write(f"movl $or_table, %edi"+"\n")
+    fout.write("movl $0, %ecx"+"\n")
+    for i in range(4):
+        fout.write(f"movb tmp_src+{i}, %ch"+"\n")
+        fout.write(f"movb tmp_dest+{i}, %cl"+"\n")
+        fout.write(f"movb (%edi, %ecx), %al"+"\n")
+        fout.write(f"movb %al, tmp_ans+{i}"+"\n")
+
+    get_reg("edi")
+    get_reg("ecx")  
+    get_reg("eax")
+    fout.write(f"movl tmp_ans, {dest}"+"\n")
+
+def write_not(dest):
+    save_reg("eax")
+    save_reg("ecx")
+    save_reg("edi")
+    fout.write(f"movl {dest}, tmp_dest"+"\n")
+    fout.write(f"movl $0, tmp_ans"+"\n")
+    fout.write(f"movl $not_table, %edi"+"\n")
+    fout.write("movl $0, %ecx"+"\n")
+    for i in range(4):
+        fout.write(f"movb tmp_dest+{i}, %cl"+"\n")
+        fout.write(f"movb (%edi, %ecx), %al"+"\n")
+        fout.write(f"movb %al, tmp_ans+{i}"+"\n")
+
+    get_reg("edi")
+    get_reg("ecx")  
+    get_reg("eax")
+    fout.write(f"movl tmp_ans, {dest}"+"\n")
+
+def write_inc(dest):
+    # de aici incepe chestia sa nu fie kinda trivial
+    # daca fac inc pe fiecare segment de 8 in parte nu imi da rezultatul bun 
+    # ceea ce o sa fac e urm chestie
+    # fac inc pe primul segment 
+    # si DACA el devine 0 atunci trebuie sa dau inc la urmatorul si tot asa
+    # in majoritatea cazurilor tho nu o sa se intample asta 
+    save_reg("edi")
+    save_reg("eax")
+    fout.write("movl $inc_table, %edi"+"\n")
+    fout.write(f"movl {dest}, tmp_dest"+"\n")
+    fout.write("movl $0, tmp_ans"+"\n")
+    fout.write("movl $0, %eax"+"\n")
+    s="fin_inc"+str(cnt["inc"])
+
+    for i in range(4):
+        fout.write(f"movb tmp_dest+{i}, %al"+"\n")
+        fout.write(f"movb (%edi, %eax), %al"+"\n")
+        fout.write(f"movb %al, tmp_ans+{i}"+"\n")
+        fout.write(f"cmpb $0, %al"+"\n")
+        fout.write(f"jne {s}"+"\n")
+
+    cnt["inc"]+=1
+    fout.write(f"{s}:"+"\n")
+    fout.write(f"movl tmp_ans, {dest}"+"\n")
+    get_reg("eax")
+    get_reg("edi")
+
+def write_dec(dest):
+    # e logica extrem de asemanatoare ca la inc 
+    # aici trebuie sa merg mai departe doar daca scad din 0
+    # adica daca cel de jos a devenit 255 
+    save_reg("edi")
+    save_reg("eax")
+    fout.write("movl $dec_table, %edi"+"\n")
+    fout.write(f"movl {dest}, tmp_dest"+"\n")
+    fout.write("movl $0, tmp_ans"+"\n")
+    fout.write("movl $0, %eax"+"\n")
+    s="fin_dec"+str(cnt["dec"])
+
+    for i in range(4):
+        fout.write(f"movb tmp_dest+{i}, %al"+"\n")
+        fout.write(f"movb (%edi, %eax), %al"+"\n")
+        fout.write(f"movb %al, tmp_ans+{i}"+"\n")
+        fout.write(f"cmpb $255, %al"+"\n")
+        fout.write(f"jne {s}"+"\n")
+
+    cnt["dec"]+=1
+    fout.write(f"{s}:"+"\n")
+    fout.write(f"movl tmp_ans, {dest}"+"\n")
+    get_reg("eax")
+    get_reg("edi")
+
+def write_add(src, dest):
+    save_reg("eax")
+    save_reg("ebx")
+    save_reg("ecx")
+    save_reg("edi")
+    fout.write("movl $0, carryval"+"\n")
+    fout.write("movl $0, tmp_ans"+"\n")
+    fout.write(f"movl {src}, tmp_src"+"\n")
+    fout.write(f"movl {dest}, tmp_dest"+"\n")
+    for i in range(4):
+        fout.write("movl carryval, %ebx"+"\n")
+        fout.write("movl addp(, %ebx, 4), %edi"+"\n")
+        fout.write("movl $0, %ecx"+"\n")
+        fout.write(f"movb tmp_src+{i}, %cl"+"\n")
+        fout.write(f"movb tmp_dest+{i}, %ch"+"\n")
+        fout.write("movb (%edi, %ecx), %al"+"\n")
+        fout.write(f"movb %al, tmp_ans+{i}"+"\n")
+        # acum trebuie sa vad daca am carry 
+        fout.write("movl carryp(, %ebx, 4), %edi"+"\n")
+        fout.write("movb (%edi, %ecx), %al"+"\n")
+        fout.write("movb %al, carryval+0"+"\n")
+    save_reg("eax")
+    save_reg("ebx")
+    save_reg("ecx")
+    save_reg("edi")
+    fout.write(f"movl tmp_ans, {dest}"+"\n")
+
+def write_sub(src,dest):
+    pass
+
 def main():
     for line in fin:
         line=line.strip()
         line=line.rstrip()
         if line==".data":
             fout.write(line+"\n")
-            for x in ["and", "or", "xor", "not"]:
+            for x in ["and", "or", "xor", "not", "inc", "dec", "add", "carry"]:
                 fout.write(f"{x}_table: .incbin "+'"'+f"{x}.bin"+'"'+"\n")
+                if x!="carry":
+                    cnt[x]=0
+            fout.write("addp: .long add_table, add_table+65536"+"\n")
+            fout.write("carryp: .long carry_table, carry_table+65536"+"\n")
+            fout.write("carryval: .space 4"+"\n")
             for x in ["eax", "ebx", "ecx", "edx", "esi", "edi"]:
                 fout.write(f"save_{x}: .space 4"+"\n")
             fout.write("tmp_src: .space 4"+"\n")
@@ -56,6 +201,66 @@ def main():
                 b=b.strip()
                 b=b.lstrip()
                 write_xor(a,b)
+            elif line[:3]=="and" or line[:4]=="andl":
+                if line[:4]=="andl":
+                    line=line[5:]
+                else:
+                    line=line[4:]
+                a,b=list(line.split(","))
+                a=a.strip()
+                a=a.lstrip()
+                b=b.strip()
+                b=b.lstrip()
+                write_and(a,b)
+            elif line[:2]=="or" or line[:3]=="orl":
+                if line[:3]=="orl":
+                    line=line[4:]
+                else:
+                    line=line[3:]
+                a,b=list(line.split(","))
+                a=a.strip()
+                a=a.lstrip()
+                b=b.strip()
+                b=b.lstrip()
+                write_or(a,b)
+            elif line[:3]=="not" or line[:4]=="notl":
+                if line[:4]=="notl":
+                    line=line[5:]
+                else:
+                    line=line[4:]
+                a=line
+                a=a.strip()
+                a=a.lstrip()
+                write_not(a)
+            elif line[:3]=="inc" or line[:4]=="incl":
+                if line[:4]=="incl":
+                    line=line[5:]
+                else:
+                    line=line[4:]
+                a=line 
+                a=a.strip()
+                a=a.lstrip()
+                write_inc(a)
+            elif line[:3]=="dec" or line[:4]=="decl":
+                if line[:4]=="decl":
+                    line=line[5:]
+                else:
+                    line=line[4:]
+                a=line 
+                a=a.strip()
+                a=a.lstrip()
+                write_dec(a)
+            elif line[:3]=="add" or line[:4]=="addl":
+                if line[:4]=="addl":
+                    line=line[5:]
+                else:
+                    line=line[4:]
+                a,b=list(line.split(","))
+                a=a.strip()
+                a=a.lstrip()
+                b=b.strip()
+                b=b.lstrip()
+                write_add(a,b)
             else:
                 fout.write(line+"\n")
 
