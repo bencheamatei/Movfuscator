@@ -18,64 +18,42 @@ n: .long 10
 .text
 .global main
 main:
-movl %eax, save_eax
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl %ecx, tmp_src
-movl %ecx, tmp_dest
-movl $0, tmp_ans
-movl $xor_table, %edi
-movl $0, %ecx
-movb tmp_src+0, %ch
-movb tmp_dest+0, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movb tmp_src+1, %ch
-movb tmp_dest+1, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movb tmp_src+2, %ch
-movb tmp_dest+2, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movb tmp_src+3, %ch
-movb tmp_dest+3, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl save_edi, %edi
-movl save_ecx, %ecx
-movl save_eax, %eax
-movl tmp_ans, %ecx
+movl $255, %ecx
 movl %edi, save_edi
 movl %eax, save_eax
 movl $inc_table, %edi
-movl %ecx, temp_dest
-movl $0, temp_ans
+movl %ecx, tmp_dest
+movl $0, tmp_ans
 movl $0, %eax
-movb temp_dest+0, %al
+movb tmp_dest+0, %al
 movb (%edi, %eax), %al
-movb %al, temp_ans+0
+movb %al, tmp_ans+0
 cmpb $0, %al
 jne fin_inc
-movb temp_dest+1, %al
+movb tmp_dest+1, %al
 movb (%edi, %eax), %al
-movb %al, temp_ans+1
+movb %al, tmp_ans+1
 cmpb $0, %al
 jne fin_inc
-movb temp_dest+2, %al
+movb tmp_dest+2, %al
 movb (%edi, %eax), %al
-movb %al, temp_ans+2
+movb %al, tmp_ans+2
 cmpb $0, %al
 jne fin_inc
-movb temp_dest+3, %al
+movb tmp_dest+3, %al
 movb (%edi, %eax), %al
-movb %al, temp_ans+3
+movb %al, tmp_ans+3
 cmpb $0, %al
 jne fin_inc
 fin_inc:
-movl temp_ans, %ecx
+movl tmp_ans, %ecx
 movl save_eax, %eax
 movl save_edi, %edi
+
+pushl %ecx
+pushl $fs
+call printf
+addl $8, %esp
 
 movl $1, %eax
 movl %eax, save_eax
