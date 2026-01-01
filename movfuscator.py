@@ -1,7 +1,12 @@
 import sys 
 
-fin=open("main.s","r")
-fout=open("main_mov.s","w")
+if len(sys.argv)<2:
+    print("Specificati fisierul")
+    exit(0)
+
+assembly_file=sys.argv[1]
+fin=open(assembly_file,"r")
+fout=open(assembly_file[:-2]+"_mov.s","w")
 cnt={} # counter de etichete
 
 def save_reg(reg):
@@ -278,6 +283,22 @@ def write_sub(src,dest):
     if dest!="%esi":
         get_reg("esi")
 
+def write_pop(dest):
+    fout.write(f"movl 0(%esp), {dest}"+"\n")
+    write_add("$4", "%esp")
+
+def write_push(src):
+    write_sub("$4", "%esp")
+    fout.write(f"movl {src}, 0(%esp)"+"\n")
+
+def write_lea(src, dest):
+    fout.write(f"movl ${src}, {dest}"+"\n")
+
+def write_loop(label):
+    write_dec("%ecx")
+    fout.write("cmpl $0, %ecx"+"\n")
+    fout.write("jne label"+"\n")
+
 def main():
     for line in fin:
         line=line.strip()
@@ -383,6 +404,36 @@ def main():
                 b=b.strip()
                 b=b.lstrip()
                 write_sub(a,b)
+            elif line[:3]=="pop" or line[:4]=="popl":
+                if line[:4]=="popl":
+                    line=line[5:]
+                else:
+                    line=line[4:]
+                a=line 
+                a=a.strip()
+                a=a.lstrip()
+                write_pop(a)
+            elif line[:4]=="push" or line[:5]=="pushl":
+                if line[:5]=="pushl":
+                    line=line[6:]
+                else:
+                    line=line[5:]
+                a=line 
+                a=a.strip()
+                a=a.lstrip()
+                write_push(a)
+            elif line[:3]=="lea":
+                line=line[4:]
+                a,b=line.split(",") 
+                a=a.strip()
+                a=a.lstrip()
+                b=b.strip()
+                b=b.lstrip()
+                write_lea(a,b)
+            elif line[:4]=="loop":
+                line=line[4:]
+                label=line.strip().lstrip()
+                write_loop(label)
             else:
                 fout.write(line+"\n")
 
