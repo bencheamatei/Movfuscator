@@ -200,7 +200,10 @@ movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, %esp
 movl save_esi, %esi
-movl s, 0(%esp)
+movl %esi, save_esi
+movl s, %esi
+movl %esi, 0(%esp)
+movl save_esi, %esi
 movl %eax, save_eax
 movl %ebx, save_ebx
 movl %ecx, save_ecx
@@ -263,9 +266,15 @@ movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, %esp
 movl save_esi, %esi
-movl $formatAfSuma, 0(%esp)
+movl %esi, save_esi
+movl $formatAfSuma, %esi
+movl %esi, 0(%esp)
+movl save_esi, %esi
 call printf
-movl 0(%esp), %ebx
+movl %esi, save_esi
+movl %ebx, %esi
+movl 0(%esp), %esi
+movl save_esi, %esi
 movl %eax, save_eax
 movl %ebx, save_ebx
 movl %ecx, save_ecx
@@ -328,7 +337,10 @@ movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, %esp
 movl save_esi, %esi
-movl 0(%esp), %ebx
+movl %esi, save_esi
+movl %ebx, %esi
+movl 0(%esp), %esi
+movl save_esi, %esi
 movl %eax, save_eax
 movl %ebx, save_ebx
 movl %ecx, save_ecx
@@ -453,7 +465,10 @@ movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, %esp
 movl save_esi, %esi
-movl stdout, 0(%esp)
+movl %esi, save_esi
+movl stdout, %esi
+movl %esi, 0(%esp)
+movl save_esi, %esi
 call fflush
 movl %eax, save_eax
 movl %ebx, save_ebx
