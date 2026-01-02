@@ -297,7 +297,7 @@ def write_lea(src, dest):
 def write_loop(label):
     write_dec("%ecx")
     fout.write("cmpl $0, %ecx"+"\n")
-    fout.write("jne label"+"\n")
+    fout.write(f"jne {label}"+"\n")
 
 def main():
     for line in fin:
