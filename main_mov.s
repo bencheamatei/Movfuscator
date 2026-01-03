@@ -749,7 +749,7 @@ movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, %esp
 movl save_esi, %esi
-movl %edx, 0(%esp)
+movl %eax, 0(%esp)
 movl %eax, save_eax
 movl %ebx, save_ebx
 movl %ecx, save_ecx
