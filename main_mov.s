@@ -11,8 +11,6 @@ sub_table: .incbin "bin/sub.bin"
 carry_sub_table: .incbin "bin/carry_sub.bin"
 shl_table: .incbin "bin/shl.bin"
 shr_table: .incbin "bin/shr.bin"
-mul_table: .incbin "bin/mul.bin"
-div_table: .incbin "bin/div.bin"
 addp: .long add_table, add_table+65536
 carryp: .long carry_table, carry_table+65536
 carryval: .space 4
@@ -215,7 +213,8 @@ movl tmp_ans, %esi
 movl %esi, mul_ans2
 movl save_esi, %esi
 fara_add0:
-movl $0, %eaxmovb curr1+3, %al
+movl $0, %eax
+movb curr1+3, %al
 movl %esi, save_esi
 movl $7, %esi
 movl %esi, tmp_cnt
@@ -224,7 +223,8 @@ for_shr0:
 cmp $0, tmp_cnt
 je fin_shr0
 movl %esi, save_esi
-movl %eax, %esi
+movl %eax
+, %esi
 movl %esi, tmp_dest
 movl save_esi, %esi
 movl %edi, save_edi
@@ -255,6 +255,7 @@ movl save_edi, %edi
 movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, %eax
+
 movl save_esi, %esi
 movl %edi, save_edi
 movl %eax, save_eax
