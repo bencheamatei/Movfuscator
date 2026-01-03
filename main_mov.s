@@ -223,8 +223,7 @@ for_shr0:
 cmp $0, tmp_cnt
 je fin_shr0
 movl %esi, save_esi
-movl %eax
-, %esi
+movl %eax, %esi
 movl %esi, tmp_dest
 movl save_esi, %esi
 movl %edi, save_edi
@@ -255,7 +254,6 @@ movl save_edi, %edi
 movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, %eax
-
 movl save_esi, %esi
 movl %edi, save_edi
 movl %eax, save_eax
