@@ -47,7 +47,7 @@ movl %eax, curr1
 movl $0, curr2
 movl $0, tmp_cnt
 for_mul0:
-cmp $32, tmp_cnt
+cmpl $32, tmp_cnt
 je fin_mul0
 movl tmp_src, %eax
 movl %eax, save_eax
@@ -87,7 +87,7 @@ movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, %eax
 movl save_esi, %esi
-cmp $0, %eax
+cmpl $0, %eax
 je fara_add0
 movl $0, carryval
 movl %eax, save_eax
