@@ -37,87 +37,8 @@ fs: .asciz "%ld\n"
 .text
 .global main
 main:
-movl $1, %eax
-movl %esi, save_esi
-movl $30, %esi
-movl %esi, tmp_cnt
-movl save_esi, %esi
-for_shl0:
-cmpl $0, tmp_cnt
-je fin_shl0
-movl %esi, save_esi
-movl %eax, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl %edi, save_edi
-movl %ecx, save_ecx
-movl %eax, save_eax
-movl $shl_table, %edi
-movl $0, %ecx
-movl $0, %eax
-movl $0, tmp_ans
-movb tmp_dest+0, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movb tmp_dest+1, %ch
-movb tmp_dest+0, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movb tmp_dest+2, %ch
-movb tmp_dest+1, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movb tmp_dest+3, %ch
-movb tmp_dest+2, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl save_eax, %eax
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, %eax
-movl save_esi, %esi
-movl %edi, save_edi
-movl %eax, save_eax
-movl $dec_table, %edi
-movl %esi, save_esi
-movl tmp_cnt, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl $0, tmp_ans
-movl $0, %eax
-movb tmp_dest+0, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+0
-cmpb $255, %al
-jne fin_dec0
-movb tmp_dest+1, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+1
-cmpb $255, %al
-jne fin_dec0
-movb tmp_dest+2, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+2
-cmpb $255, %al
-jne fin_dec0
-movb tmp_dest+3, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+3
-cmpb $255, %al
-jne fin_dec0
-fin_dec0:
-movl save_eax, %eax
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, tmp_cnt
-movl save_esi, %esi
-jmp for_shl0
-fin_shl0:
-
-movl $8, %ecx
+movl $2, %eax
+movl $3, %ecx
 movl %esi, save_esi
 movl %ecx, %esi
 movl %esi, tmp_src2
@@ -349,23 +270,23 @@ movb tmp_dest+0, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+0
 cmpb $255, %al
-jne fin_dec1
+jne fin_dec0
 movb tmp_dest+1, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+1
 cmpb $255, %al
-jne fin_dec1
+jne fin_dec0
 movb tmp_dest+2, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+2
 cmpb $255, %al
-jne fin_dec1
+jne fin_dec0
 movb tmp_dest+3, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+3
 cmpb $255, %al
-jne fin_dec1
-fin_dec1:
+jne fin_dec0
+fin_dec0:
 movl save_eax, %eax
 movl save_edi, %edi
 movl %esi, save_esi
@@ -380,9 +301,9 @@ movl %esi, save_esi
 movl $1, %esi
 movl %esi, tmp_cnt
 movl save_esi, %esi
-for_shl1:
+for_shl0:
 cmpl $0, tmp_cnt
-je fin_shl1
+je fin_shl0
 movl %esi, save_esi
 movl curr1, %esi
 movl %esi, tmp_dest
@@ -429,38 +350,38 @@ movb tmp_dest+0, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+0
 cmpb $255, %al
-jne fin_dec2
+jne fin_dec1
 movb tmp_dest+1, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+1
 cmpb $255, %al
-jne fin_dec2
+jne fin_dec1
 movb tmp_dest+2, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+2
 cmpb $255, %al
-jne fin_dec2
+jne fin_dec1
 movb tmp_dest+3, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+3
 cmpb $255, %al
-jne fin_dec2
-fin_dec2:
+jne fin_dec1
+fin_dec1:
 movl save_eax, %eax
 movl save_edi, %edi
 movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, tmp_cnt
 movl save_esi, %esi
-jmp for_shl1
-fin_shl1:
+jmp for_shl0
+fin_shl0:
 movl %esi, save_esi
 movl $1, %esi
 movl %esi, tmp_cnt
 movl save_esi, %esi
-for_shl2:
+for_shl1:
 cmpl $0, tmp_cnt
-je fin_shl2
+je fin_shl1
 movl %esi, save_esi
 movl curr2, %esi
 movl %esi, tmp_dest
@@ -507,31 +428,31 @@ movb tmp_dest+0, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+0
 cmpb $255, %al
-jne fin_dec3
+jne fin_dec2
 movb tmp_dest+1, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+1
 cmpb $255, %al
-jne fin_dec3
+jne fin_dec2
 movb tmp_dest+2, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+2
 cmpb $255, %al
-jne fin_dec3
+jne fin_dec2
 movb tmp_dest+3, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+3
 cmpb $255, %al
-jne fin_dec3
-fin_dec3:
+jne fin_dec2
+fin_dec2:
 movl save_eax, %eax
 movl save_edi, %edi
 movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, tmp_cnt
 movl save_esi, %esi
-jmp for_shl2
-fin_shl2:
+jmp for_shl1
+fin_shl1:
 movl %eax, save_eax
 movl %ecx, save_ecx
 movl %edi, save_edi
@@ -622,23 +543,23 @@ movb tmp_dest+0, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+0
 cmpb $255, %al
-jne fin_dec4
+jne fin_dec3
 movb tmp_dest+1, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+1
 cmpb $255, %al
-jne fin_dec4
+jne fin_dec3
 movb tmp_dest+2, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+2
 cmpb $255, %al
-jne fin_dec4
+jne fin_dec3
 movb tmp_dest+3, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+3
 cmpb $255, %al
-jne fin_dec4
-fin_dec4:
+jne fin_dec3
+fin_dec3:
 movl save_eax, %eax
 movl save_edi, %edi
 movl %esi, save_esi
