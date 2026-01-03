@@ -465,7 +465,7 @@ movl tmp_ans, %esi
 movl %esi, %edx
 movl save_esi, %esi
 cmpl $0, %edx
-je inc_while
+je merg_while
 
 movl %ecx, %eax
 movl base, %ecx
@@ -1040,42 +1040,7 @@ movl mul_ans1, %eax
 movl mul_ans2, %edx
 movl %eax, %ecx
 
-movl %edi, save_edi
-movl %eax, save_eax
-movl $inc_table, %edi
-movl %esi, save_esi
-movl while:, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl $0, tmp_ans
-movl $0, %eax
-movb tmp_dest+0, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+0
-cmpb $0, %al
-jne fin_inc1
-movb tmp_dest+1, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+1
-cmpb $0, %al
-jne fin_inc1
-movb tmp_dest+2, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+2
-cmpb $0, %al
-jne fin_inc1
-movb tmp_dest+3, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+3
-cmpb $0, %al
-jne fin_inc1
-fin_inc1:
-movl save_eax, %eax
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, while:
-movl save_esi, %esi
+merg_while:
 movl %esi, save_esi
 movl $1, %esi
 movl %esi, tmp_cnt
@@ -1698,23 +1663,23 @@ movb tmp_dest+0, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+0
 cmpb $0, %al
-jne fin_inc2
+jne fin_inc1
 movb tmp_dest+1, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+1
 cmpb $0, %al
-jne fin_inc2
+jne fin_inc1
 movb tmp_dest+2, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+2
 cmpb $0, %al
-jne fin_inc2
+jne fin_inc1
 movb tmp_dest+3, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+3
 cmpb $0, %al
-jne fin_inc2
-fin_inc2:
+jne fin_inc1
+fin_inc1:
 movl save_eax, %eax
 movl save_edi, %edi
 movl %esi, save_esi
