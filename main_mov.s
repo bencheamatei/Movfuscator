@@ -30,14 +30,14 @@ fs: .asciz "%ld\n"
 .text
 .global main
 main:
-movl $1, %ecx
+movl $45871, %ecx
 movl %esi, save_esi
 movl $4, %esi
 movl %esi, tmp_cnt
 movl save_esi, %esi
-for_shl0:
+for_shr0:
 cmp $0, tmp_cnt
-je fin_shl0
+je fin_shr0
 movl %esi, save_esi
 movl %ecx, %esi
 movl %esi, tmp_dest
@@ -45,25 +45,25 @@ movl save_esi, %esi
 movl %edi, save_edi
 movl %ecx, save_ecx
 movl %eax, save_eax
-movl $shl_table, %edi
+movl $shr_table, %edi
 movl $0, %ecx
 movl $0, %eax
 movl $0, tmp_ans
-movb tmp_dest+0, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movb tmp_dest+1, %ch
-movb tmp_dest+0, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movb tmp_dest+2, %ch
-movb tmp_dest+1, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
 movb tmp_dest+3, %ch
-movb tmp_dest+2, %cl
 movb (%edi, %ecx), %al
 movb %al, tmp_ans+3
+movb tmp_dest+2, %ch
+movb tmp_dest+3, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+2
+movb tmp_dest+1, %ch
+movb tmp_dest+2, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+1
+movb tmp_dest+0, %ch
+movb tmp_dest+1, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+0
 movl save_eax, %eax
 movl save_ecx, %ecx
 movl save_edi, %edi
@@ -107,8 +107,8 @@ movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, tmp_cnt
 movl save_esi, %esi
-jmp for_shl0
-fin_shl0:
+jmp for_shr0
+fin_shr0:
 
 movl %eax, save_eax
 movl %ebx, save_ebx
