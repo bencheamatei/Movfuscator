@@ -496,7 +496,7 @@ for_shr1:
 cmpl $0, tmp_cnt
 je fin_shr1
 movl %esi, save_esi
-movl tmp_dest, %esi
+movl tmp_src, %esi
 movl %esi, tmp_dest
 movl save_esi, %esi
 movl %edi, save_edi
@@ -526,7 +526,7 @@ movl save_ecx, %ecx
 movl save_edi, %edi
 movl %esi, save_esi
 movl tmp_ans, %esi
-movl %esi, tmp_dest
+movl %esi, tmp_src
 movl save_esi, %esi
 movl %edi, save_edi
 movl %eax, save_eax
