@@ -374,6 +374,7 @@ movl %esi, tmp_cnt
 movl save_esi, %esi
 jmp for_shr0
 fin_shr0:
+movl $0, auxx
 movl %eax, auxx
 movl %esi, save_esi
 movl $1, %esi
