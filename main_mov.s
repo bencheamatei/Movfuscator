@@ -31,6 +31,7 @@ mul_ans2: .space 4
 curr1: .space 4
 curr2: .space 4
 auxx: .space 4
+tmp_cnt2: .space 4
 fs: .asciz "%ld\n"
 .text
 .global main
@@ -45,9 +46,9 @@ movl $0, mul_ans1
 movl $0, mul_ans2
 movl %eax, curr1
 movl $0, curr2
-movl $0, tmp_cnt
+movl $0, tmp_cnt2
 for_mul0:
-cmpl $32, tmp_cnt
+cmpl $32, tmp_cnt2
 je fin_mul0
 movl tmp_src, %eax
 movl %eax, save_eax
@@ -569,7 +570,7 @@ movl %edi, save_edi
 movl %eax, save_eax
 movl $inc_table, %edi
 movl %esi, save_esi
-movl tmp_cnt, %esi
+movl tmp_cnt2, %esi
 movl %esi, tmp_dest
 movl save_esi, %esi
 movl $0, tmp_ans
@@ -599,7 +600,7 @@ movl save_eax, %eax
 movl save_edi, %edi
 movl %esi, save_esi
 movl tmp_ans, %esi
-movl %esi, tmp_cnt
+movl %esi, tmp_cnt2
 movl save_esi, %esi
 jmp for_mul0
 fin_mul0:
