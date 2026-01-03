@@ -32,6 +32,7 @@ curr1: .space 4
 curr2: .space 4
 auxx: .space 4
 tmp_cnt2: .space 4
+tmp_src2: .space 4
 fs: .asciz "%ld\n"
 .text
 .global main
@@ -40,7 +41,7 @@ movl $10, %ecx
 movl $1, %eax
 movl %esi, save_esi
 movl %ecx, %esi
-movl %esi, tmp_src
+movl %esi, tmp_src2
 movl save_esi, %esi
 movl $0, mul_ans1
 movl $0, mul_ans2
@@ -50,7 +51,7 @@ movl $0, tmp_cnt2
 for_mul0:
 cmpl $32, tmp_cnt2
 je fin_mul0
-movl tmp_src, %eax
+movl tmp_src2, %eax
 movl %eax, save_eax
 movl %ecx, save_ecx
 movl %edi, save_edi
