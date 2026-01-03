@@ -220,7 +220,7 @@ movl $7, %esi
 movl %esi, tmp_cnt
 movl save_esi, %esi
 for_shr0:
-cmp $0, tmp_cnt
+cmpl $0, tmp_cnt
 je fin_shr0
 movl %esi, save_esi
 movl %eax, %esi
@@ -299,7 +299,7 @@ movl $1, %esi
 movl %esi, tmp_cnt
 movl save_esi, %esi
 for_shl0:
-cmp $0, tmp_cnt
+cmpl $0, tmp_cnt
 je fin_shl0
 movl %esi, save_esi
 movl curr1, %esi
@@ -377,7 +377,7 @@ movl $1, %esi
 movl %esi, tmp_cnt
 movl save_esi, %esi
 for_shl1:
-cmp $0, tmp_cnt
+cmpl $0, tmp_cnt
 je fin_shl1
 movl %esi, save_esi
 movl curr2, %esi
@@ -492,7 +492,7 @@ movl $1, %esi
 movl %esi, tmp_cnt
 movl save_esi, %esi
 for_shr1:
-cmp $0, tmp_cnt
+cmpl $0, tmp_cnt
 je fin_shr1
 movl %esi, save_esi
 movl tmp_dest, %esi
