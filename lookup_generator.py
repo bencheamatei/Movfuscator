@@ -20,7 +20,7 @@ def genor():
     a=bytearray()
     for x in range(256):
         for y in range(256):
-            a.append((x|y)&0xFF)
+            a.append((x|y))
 
     with open("or.bin","wb") as fout:
         fout.write(a)
@@ -94,6 +94,29 @@ def gensub():
     with open("carry_sub.bin","wb") as fout:
         fout.write(b)
 
+def genshl():
+
+    # aici sunt tabele cu shift doar cu 1 
+    # practic la mine o sa fac un mic loop ca sa dau shift cu 1 de cate ori e nevoie 
+
+    a=bytearray()
+    for x in range(256):
+        for y in range(256):
+            # y e byteul de dinainte
+            a.append(((x<<1)&0xFF)|(y>>7))
+
+    with open("shl.bin","wb") as fout:
+        fout.write(a)
+
+def genshr():
+    a=bytearray()
+    for x in range(256):
+        for y in range(256):
+            a.append(((x>>1)&0xFF)|((y&1)<<7))
+
+    with open("shr.bin","wb") as fout:
+        fout.write(a)
+
 genand()
 gennot()
 genor()
@@ -102,3 +125,5 @@ geninc()
 gendec()
 genadd()
 gensub()
+genshl()
+genshr()
