@@ -500,7 +500,54 @@ def write_mul(op):
     cnt["mul"]+=1
 
 def write_div(op):
-    pass
+    # deci e 3 dimineata cand scriu functia asta
+    # daca merge i might actually be him 
+
+    save_reg("esi")
+    fout.write(f"movl {op}, %esi\n")
+    fout.write("movl %esi, tmp_src2\n")
+    get_reg("esi")
+
+    fout.write("movl %eax, curr1\n")
+    fout.write("movl %edx, curr2\n")
+    fout.write("movl $0, rest\n")
+    fout.write("movl $0, tmp_cnt2\n")
+    fout.write("for_div"+str(cnt["div"])+":\n")
+    fout.write("cmpl $64, tmp_cnt2\n")
+    fout.write("je fin_div"+str(cnt["div"])+"\n")
+
+    fout.write("movl $0, %eax\n")
+    fout.write("movb curr2+3, %al\n")
+    write_shr("$7", "%eax")
+    fout.write("movb %al, aux\n")
+
+    fout.write("movl $0, %eax\n")
+    fout.write("movb curr1+3, %al\n")
+    write_shr("$7", "%eax")
+    fout.write("movb %al, auxx\n")
+
+    write_shl("$1", "rest")
+    write_or("aux", "rest")
+
+    write_shl("$1", "curr2")
+    write_or("auxx", "curr2")
+
+    write_shl("$1", "curr1")
+
+    fout.write("movl rest, %eax\n")
+    fout.write("cmpl tmp_src2, %eax\n")
+    fout.write("jb fara_sub"+str(cnt["div"])+"\n")
+
+    write_sub("tmp_src2", "rest")
+    write_or("$1", "curr1")
+
+    fout.write("fara_sub"+str(cnt["div"])+":\n")
+    write_inc("tmp_cnt2")
+    fout.write("jmp for_div"+str(cnt["div"])+"\n")
+    fout.write("fin_div"+str(cnt["div"])+":\n")
+    fout.write("movl curr1, %eax\n")
+    fout.write("movl rest, %edx\n")
+    cnt["div"]+=1
 
 def main():
     for line in fin:
@@ -531,8 +578,11 @@ def main():
             fout.write("curr1: .space 4\n")
             fout.write("curr2: .space 4\n")
             fout.write("auxx: .space 4\n")
+            fout.write("aux: .space 4\n")
             fout.write("tmp_cnt2: .space 4\n")
             fout.write("tmp_src2: .space 4\n")
+            fout.write("tmp_div: .space 4\n")
+            fout.write("rest: .space 4\n")
         else:
             if line[:3]=="xor" or line[:4]=="xorl":
                 if line[:4]=="xorl":
@@ -669,9 +719,15 @@ def main():
                     line=line[4:]
                 else:
                     line=line[3:]
-
                 a=line.strip().lstrip()
                 write_mul(a)
+            elif line[:3]=="div" or line[:4]=="divl":
+                if line[:4]=="divl":
+                    line=line[4:]
+                else:
+                    line=line[3:]
+                a=line.strip().lstrip()
+                write_div(a)
             else:
                 fout.write(line+"\n")
 
