@@ -31,8 +31,11 @@ mul_ans2: .space 4
 curr1: .space 4
 curr2: .space 4
 auxx: .space 4
+aux: .space 4
 tmp_cnt2: .space 4
 tmp_src2: .space 4
+tmp_div: .space 4
+rest: .space 4
 fs: .asciz "%ld\n"
 fsc: .asciz "%ld"
 base: .space 4
@@ -41,397 +44,10 @@ expo: .space 4
 .global main
 main:
 movl %eax, save_eax
-movl %ebx, save_ebx
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl $0, carryval
-movl $0, tmp_ans
-movl %esi, save_esi
-movl $4, %esi
-movl %esi, tmp_src
-movl save_esi, %esi
-movl %esi, save_esi
-movl %esp, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+0, %cl
-movb tmp_dest+0, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+1, %cl
-movb tmp_dest+1, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+2, %cl
-movb tmp_dest+2, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+3, %cl
-movb tmp_dest+3, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl save_eax, %eax
-movl save_ebx, %ebx
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, %esp
-movl save_esi, %esi
-movl $base, 0(%esp)
-movl %eax, save_eax
-movl %ebx, save_ebx
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl $0, carryval
-movl $0, tmp_ans
-movl %esi, save_esi
-movl $4, %esi
-movl %esi, tmp_src
-movl save_esi, %esi
-movl %esi, save_esi
-movl %esp, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+0, %cl
-movb tmp_dest+0, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+1, %cl
-movb tmp_dest+1, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+2, %cl
-movb tmp_dest+2, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+3, %cl
-movb tmp_dest+3, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl save_eax, %eax
-movl save_ebx, %ebx
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, %esp
-movl save_esi, %esi
-movl $fsc, 0(%esp)
-call scanf
-movl %eax, save_eax
-movl %ebx, save_ebx
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl $0, carryval
-movl $0, tmp_ans
-movl %esi, save_esi
-movl $8, %esi
-movl %esi, tmp_src
-movl save_esi, %esi
-movl %esi, save_esi
-movl %esp, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+0, %cl
-movb tmp_dest+0, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+1, %cl
-movb tmp_dest+1, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+2, %cl
-movb tmp_dest+2, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+3, %cl
-movb tmp_dest+3, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl save_eax, %eax
-movl save_ebx, %ebx
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, %esp
-movl save_esi, %esi
-
-movl %eax, save_eax
-movl %ebx, save_ebx
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl $0, carryval
-movl $0, tmp_ans
-movl %esi, save_esi
-movl $4, %esi
-movl %esi, tmp_src
-movl save_esi, %esi
-movl %esi, save_esi
-movl %esp, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+0, %cl
-movb tmp_dest+0, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+1, %cl
-movb tmp_dest+1, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+2, %cl
-movb tmp_dest+2, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+3, %cl
-movb tmp_dest+3, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl save_eax, %eax
-movl save_ebx, %ebx
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, %esp
-movl save_esi, %esi
-movl $expo, 0(%esp)
-movl %eax, save_eax
-movl %ebx, save_ebx
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl $0, carryval
-movl $0, tmp_ans
-movl %esi, save_esi
-movl $4, %esi
-movl %esi, tmp_src
-movl save_esi, %esi
-movl %esi, save_esi
-movl %esp, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+0, %cl
-movb tmp_dest+0, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+1, %cl
-movb tmp_dest+1, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+2, %cl
-movb tmp_dest+2, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl subp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+3, %cl
-movb tmp_dest+3, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl carry_subp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl save_eax, %eax
-movl save_ebx, %ebx
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, %esp
-movl save_esi, %esi
-movl $fsc, 0(%esp)
-call scanf
-movl %eax, save_eax
-movl %ebx, save_ebx
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl $0, carryval
-movl $0, tmp_ans
-movl %esi, save_esi
-movl $8, %esi
-movl %esi, tmp_src
-movl save_esi, %esi
-movl %esi, save_esi
-movl %esp, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+0, %cl
-movb tmp_dest+0, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+1, %cl
-movb tmp_dest+1, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+2, %cl
-movb tmp_dest+2, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+3, %cl
-movb tmp_dest+3, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl save_eax, %eax
-movl save_ebx, %ebx
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, %esp
-movl save_esi, %esi
-
-movl $1, %ecx
-
-et_while:
-cmpl $0, expo
-je et_final
-
-movl expo, %edx
-movl %eax, save_eax
 movl %ecx, save_ecx
 movl %edi, save_edi
 movl %esi, save_esi
-movl $1, %esi
+movl %edx, %esi
 movl %esi, tmp_src
 movl save_esi, %esi
 movl %esi, save_esi
@@ -439,7 +55,7 @@ movl %edx, %esi
 movl %esi, tmp_dest
 movl save_esi, %esi
 movl $0, tmp_ans
-movl $and_table, %edi
+movl $xor_table, %edi
 movl $0, %ecx
 movb tmp_src+0, %ch
 movb tmp_dest+0, %cl
@@ -464,189 +80,22 @@ movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, %edx
 movl save_esi, %esi
-cmpl $0, %edx
-je merg_while
+movl $30, %eax
+movl $4, %ecx
 
-movl %ecx, %eax
-movl base, %ecx
 movl %esi, save_esi
 movl %ecx, %esi
 movl %esi, tmp_src2
 movl save_esi, %esi
-movl $0, mul_ans1
-movl $0, mul_ans2
 movl %eax, curr1
-movl $0, curr2
+movl %edx, curr2
+movl $0, rest
 movl $0, tmp_cnt2
-for_mul0:
-cmpl $32, tmp_cnt2
-je fin_mul0
-movl tmp_src2, %eax
-movl %eax, save_eax
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl %esi, save_esi
-movl $1, %esi
-movl %esi, tmp_src
-movl save_esi, %esi
-movl %esi, save_esi
-movl %eax, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl $0, tmp_ans
-movl $and_table, %edi
-movl $0, %ecx
-movb tmp_src+0, %ch
-movb tmp_dest+0, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movb tmp_src+1, %ch
-movb tmp_dest+1, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movb tmp_src+2, %ch
-movb tmp_dest+2, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movb tmp_src+3, %ch
-movb tmp_dest+3, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl save_edi, %edi
-movl save_ecx, %ecx
-movl save_eax, %eax
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, %eax
-movl save_esi, %esi
-cmpl $0, %eax
-je fara_add0
-movl $0, carryval
-movl %eax, save_eax
-movl %ebx, save_ebx
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl $0, tmp_ans
-movl %esi, save_esi
-movl curr1, %esi
-movl %esi, tmp_src
-movl save_esi, %esi
-movl %esi, save_esi
-movl mul_ans1, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+0, %cl
-movb tmp_dest+0, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+1, %cl
-movb tmp_dest+1, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+2, %cl
-movb tmp_dest+2, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+3, %cl
-movb tmp_dest+3, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl save_eax, %eax
-movl save_ebx, %ebx
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, mul_ans1
-movl save_esi, %esi
-movl %eax, save_eax
-movl %ebx, save_ebx
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl $0, tmp_ans
-movl %esi, save_esi
-movl curr2, %esi
-movl %esi, tmp_src
-movl save_esi, %esi
-movl %esi, save_esi
-movl mul_ans2, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+0, %cl
-movb tmp_dest+0, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+1, %cl
-movb tmp_dest+1, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+2, %cl
-movb tmp_dest+2, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+3, %cl
-movb tmp_dest+3, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl save_eax, %eax
-movl save_ebx, %ebx
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, mul_ans2
-movl save_esi, %esi
-fara_add0:
+for_div0:
+cmpl $64, tmp_cnt2
+je fin_div0
 movl $0, %eax
-movb curr1+3, %al
+movb curr2+3, %al
 movl %esi, save_esi
 movl $7, %esi
 movl %esi, tmp_cnt
@@ -725,47 +174,48 @@ movl %esi, tmp_cnt
 movl save_esi, %esi
 jmp for_shr0
 fin_shr0:
-movl $0, auxx
-movl %eax, auxx
+movb %al, aux
+movl $0, %eax
+movb curr1+3, %al
 movl %esi, save_esi
-movl $1, %esi
+movl $7, %esi
 movl %esi, tmp_cnt
 movl save_esi, %esi
-for_shl0:
+for_shr1:
 cmpl $0, tmp_cnt
-je fin_shl0
+je fin_shr1
 movl %esi, save_esi
-movl curr1, %esi
+movl %eax, %esi
 movl %esi, tmp_dest
 movl save_esi, %esi
 movl %edi, save_edi
 movl %ecx, save_ecx
 movl %eax, save_eax
-movl $shl_table, %edi
+movl $shr_table, %edi
 movl $0, %ecx
 movl $0, %eax
 movl $0, tmp_ans
-movb tmp_dest+0, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movb tmp_dest+1, %ch
-movb tmp_dest+0, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movb tmp_dest+2, %ch
-movb tmp_dest+1, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
 movb tmp_dest+3, %ch
-movb tmp_dest+2, %cl
 movb (%edi, %ecx), %al
 movb %al, tmp_ans+3
+movb tmp_dest+2, %ch
+movb tmp_dest+3, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+2
+movb tmp_dest+1, %ch
+movb tmp_dest+2, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+1
+movb tmp_dest+0, %ch
+movb tmp_dest+1, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+0
 movl save_eax, %eax
 movl save_ecx, %ecx
 movl save_edi, %edi
 movl %esi, save_esi
 movl tmp_ans, %esi
-movl %esi, curr1
+movl %esi, %eax
 movl save_esi, %esi
 movl %edi, save_edi
 movl %eax, save_eax
@@ -803,8 +253,124 @@ movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, tmp_cnt
 movl save_esi, %esi
+jmp for_shr1
+fin_shr1:
+movb %al, auxx
+movl %esi, save_esi
+movl $1, %esi
+movl %esi, tmp_cnt
+movl save_esi, %esi
+for_shl0:
+cmpl $0, tmp_cnt
+je fin_shl0
+movl %esi, save_esi
+movl rest, %esi
+movl %esi, tmp_dest
+movl save_esi, %esi
+movl %edi, save_edi
+movl %ecx, save_ecx
+movl %eax, save_eax
+movl $shl_table, %edi
+movl $0, %ecx
+movl $0, %eax
+movl $0, tmp_ans
+movb tmp_dest+0, %ch
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+0
+movb tmp_dest+1, %ch
+movb tmp_dest+0, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+1
+movb tmp_dest+2, %ch
+movb tmp_dest+1, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+2
+movb tmp_dest+3, %ch
+movb tmp_dest+2, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+3
+movl save_eax, %eax
+movl save_ecx, %ecx
+movl save_edi, %edi
+movl %esi, save_esi
+movl tmp_ans, %esi
+movl %esi, rest
+movl save_esi, %esi
+movl %edi, save_edi
+movl %eax, save_eax
+movl $dec_table, %edi
+movl %esi, save_esi
+movl tmp_cnt, %esi
+movl %esi, tmp_dest
+movl save_esi, %esi
+movl $0, tmp_ans
+movl $0, %eax
+movb tmp_dest+0, %al
+movb (%edi, %eax), %al
+movb %al, tmp_ans+0
+cmpb $255, %al
+jne fin_dec2
+movb tmp_dest+1, %al
+movb (%edi, %eax), %al
+movb %al, tmp_ans+1
+cmpb $255, %al
+jne fin_dec2
+movb tmp_dest+2, %al
+movb (%edi, %eax), %al
+movb %al, tmp_ans+2
+cmpb $255, %al
+jne fin_dec2
+movb tmp_dest+3, %al
+movb (%edi, %eax), %al
+movb %al, tmp_ans+3
+cmpb $255, %al
+jne fin_dec2
+fin_dec2:
+movl save_eax, %eax
+movl save_edi, %edi
+movl %esi, save_esi
+movl tmp_ans, %esi
+movl %esi, tmp_cnt
+movl save_esi, %esi
 jmp for_shl0
 fin_shl0:
+movl %eax, save_eax
+movl %ecx, save_ecx
+movl %edi, save_edi
+movl %esi, save_esi
+movl aux, %esi
+movl %esi, tmp_src
+movl save_esi, %esi
+movl %esi, save_esi
+movl rest, %esi
+movl %esi, tmp_dest
+movl save_esi, %esi
+movl $0, tmp_ans
+movl $or_table, %edi
+movl $0, %ecx
+movb tmp_src+0, %ch
+movb tmp_dest+0, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+0
+movb tmp_src+1, %ch
+movb tmp_dest+1, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+1
+movb tmp_src+2, %ch
+movb tmp_dest+2, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+2
+movb tmp_src+3, %ch
+movb tmp_dest+3, %cl
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+3
+movl save_edi, %edi
+movl save_ecx, %ecx
+movl save_eax, %eax
+movl %esi, save_esi
+movl tmp_ans, %esi
+movl %esi, rest
+movl save_esi, %esi
 movl %esi, save_esi
 movl $1, %esi
 movl %esi, tmp_cnt
@@ -858,23 +424,23 @@ movb tmp_dest+0, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+0
 cmpb $255, %al
-jne fin_dec2
+jne fin_dec3
 movb tmp_dest+1, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+1
 cmpb $255, %al
-jne fin_dec2
+jne fin_dec3
 movb tmp_dest+2, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+2
 cmpb $255, %al
-jne fin_dec2
+jne fin_dec3
 movb tmp_dest+3, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+3
 cmpb $255, %al
-jne fin_dec2
-fin_dec2:
+jne fin_dec3
+fin_dec3:
 movl save_eax, %eax
 movl save_edi, %edi
 movl %esi, save_esi
@@ -920,465 +486,6 @@ movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, curr2
 movl save_esi, %esi
-movl %esi, save_esi
-movl $1, %esi
-movl %esi, tmp_cnt
-movl save_esi, %esi
-for_shr1:
-cmpl $0, tmp_cnt
-je fin_shr1
-movl %esi, save_esi
-movl tmp_src2, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl %edi, save_edi
-movl %ecx, save_ecx
-movl %eax, save_eax
-movl $shr_table, %edi
-movl $0, %ecx
-movl $0, %eax
-movl $0, tmp_ans
-movb tmp_dest+3, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movb tmp_dest+2, %ch
-movb tmp_dest+3, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movb tmp_dest+1, %ch
-movb tmp_dest+2, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movb tmp_dest+0, %ch
-movb tmp_dest+1, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movl save_eax, %eax
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, tmp_src2
-movl save_esi, %esi
-movl %edi, save_edi
-movl %eax, save_eax
-movl $dec_table, %edi
-movl %esi, save_esi
-movl tmp_cnt, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl $0, tmp_ans
-movl $0, %eax
-movb tmp_dest+0, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+0
-cmpb $255, %al
-jne fin_dec3
-movb tmp_dest+1, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+1
-cmpb $255, %al
-jne fin_dec3
-movb tmp_dest+2, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+2
-cmpb $255, %al
-jne fin_dec3
-movb tmp_dest+3, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+3
-cmpb $255, %al
-jne fin_dec3
-fin_dec3:
-movl save_eax, %eax
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, tmp_cnt
-movl save_esi, %esi
-jmp for_shr1
-fin_shr1:
-movl %edi, save_edi
-movl %eax, save_eax
-movl $inc_table, %edi
-movl %esi, save_esi
-movl tmp_cnt2, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl $0, tmp_ans
-movl $0, %eax
-movb tmp_dest+0, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+0
-cmpb $0, %al
-jne fin_inc0
-movb tmp_dest+1, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+1
-cmpb $0, %al
-jne fin_inc0
-movb tmp_dest+2, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+2
-cmpb $0, %al
-jne fin_inc0
-movb tmp_dest+3, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+3
-cmpb $0, %al
-jne fin_inc0
-fin_inc0:
-movl save_eax, %eax
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, tmp_cnt2
-movl save_esi, %esi
-jmp for_mul0
-fin_mul0:
-movl mul_ans1, %eax
-movl mul_ans2, %edx
-movl %eax, %ecx
-
-merg_while:
-movl %esi, save_esi
-movl $1, %esi
-movl %esi, tmp_cnt
-movl save_esi, %esi
-for_shr2:
-cmpl $0, tmp_cnt
-je fin_shr2
-movl %esi, save_esi
-movl expo, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl %edi, save_edi
-movl %ecx, save_ecx
-movl %eax, save_eax
-movl $shr_table, %edi
-movl $0, %ecx
-movl $0, %eax
-movl $0, tmp_ans
-movb tmp_dest+3, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movb tmp_dest+2, %ch
-movb tmp_dest+3, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movb tmp_dest+1, %ch
-movb tmp_dest+2, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movb tmp_dest+0, %ch
-movb tmp_dest+1, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movl save_eax, %eax
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, expo
-movl save_esi, %esi
-movl %edi, save_edi
-movl %eax, save_eax
-movl $dec_table, %edi
-movl %esi, save_esi
-movl tmp_cnt, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl $0, tmp_ans
-movl $0, %eax
-movb tmp_dest+0, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+0
-cmpb $255, %al
-jne fin_dec4
-movb tmp_dest+1, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+1
-cmpb $255, %al
-jne fin_dec4
-movb tmp_dest+2, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+2
-cmpb $255, %al
-jne fin_dec4
-movb tmp_dest+3, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+3
-cmpb $255, %al
-jne fin_dec4
-fin_dec4:
-movl save_eax, %eax
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, tmp_cnt
-movl save_esi, %esi
-jmp for_shr2
-fin_shr2:
-movl base, %eax
-movl base, %edx
-movl %esi, save_esi
-movl %edx, %esi
-movl %esi, tmp_src2
-movl save_esi, %esi
-movl $0, mul_ans1
-movl $0, mul_ans2
-movl %eax, curr1
-movl $0, curr2
-movl $0, tmp_cnt2
-for_mul1:
-cmpl $32, tmp_cnt2
-je fin_mul1
-movl tmp_src2, %eax
-movl %eax, save_eax
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl %esi, save_esi
-movl $1, %esi
-movl %esi, tmp_src
-movl save_esi, %esi
-movl %esi, save_esi
-movl %eax, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl $0, tmp_ans
-movl $and_table, %edi
-movl $0, %ecx
-movb tmp_src+0, %ch
-movb tmp_dest+0, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movb tmp_src+1, %ch
-movb tmp_dest+1, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movb tmp_src+2, %ch
-movb tmp_dest+2, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movb tmp_src+3, %ch
-movb tmp_dest+3, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl save_edi, %edi
-movl save_ecx, %ecx
-movl save_eax, %eax
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, %eax
-movl save_esi, %esi
-cmpl $0, %eax
-je fara_add1
-movl $0, carryval
-movl %eax, save_eax
-movl %ebx, save_ebx
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl $0, tmp_ans
-movl %esi, save_esi
-movl curr1, %esi
-movl %esi, tmp_src
-movl save_esi, %esi
-movl %esi, save_esi
-movl mul_ans1, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+0, %cl
-movb tmp_dest+0, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+1, %cl
-movb tmp_dest+1, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+2, %cl
-movb tmp_dest+2, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+3, %cl
-movb tmp_dest+3, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl save_eax, %eax
-movl save_ebx, %ebx
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, mul_ans1
-movl save_esi, %esi
-movl %eax, save_eax
-movl %ebx, save_ebx
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl $0, tmp_ans
-movl %esi, save_esi
-movl curr2, %esi
-movl %esi, tmp_src
-movl save_esi, %esi
-movl %esi, save_esi
-movl mul_ans2, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+0, %cl
-movb tmp_dest+0, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+1, %cl
-movb tmp_dest+1, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+2, %cl
-movb tmp_dest+2, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl carryval, %ebx
-movl addp(, %ebx, 4), %edi
-movl $0, %ecx
-movb tmp_src+3, %cl
-movb tmp_dest+3, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl carryp(, %ebx, 4), %edi
-movb (%edi, %ecx), %al
-movb %al, carryval+0
-movl save_eax, %eax
-movl save_ebx, %ebx
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, mul_ans2
-movl save_esi, %esi
-fara_add1:
-movl $0, %eax
-movb curr1+3, %al
-movl %esi, save_esi
-movl $7, %esi
-movl %esi, tmp_cnt
-movl save_esi, %esi
-for_shr3:
-cmpl $0, tmp_cnt
-je fin_shr3
-movl %esi, save_esi
-movl %eax, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl %edi, save_edi
-movl %ecx, save_ecx
-movl %eax, save_eax
-movl $shr_table, %edi
-movl $0, %ecx
-movl $0, %eax
-movl $0, tmp_ans
-movb tmp_dest+3, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movb tmp_dest+2, %ch
-movb tmp_dest+3, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movb tmp_dest+1, %ch
-movb tmp_dest+2, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movb tmp_dest+0, %ch
-movb tmp_dest+1, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movl save_eax, %eax
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, %eax
-movl save_esi, %esi
-movl %edi, save_edi
-movl %eax, save_eax
-movl $dec_table, %edi
-movl %esi, save_esi
-movl tmp_cnt, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl $0, tmp_ans
-movl $0, %eax
-movb tmp_dest+0, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+0
-cmpb $255, %al
-jne fin_dec5
-movb tmp_dest+1, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+1
-cmpb $255, %al
-jne fin_dec5
-movb tmp_dest+2, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+2
-cmpb $255, %al
-jne fin_dec5
-movb tmp_dest+3, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+3
-cmpb $255, %al
-jne fin_dec5
-fin_dec5:
-movl save_eax, %eax
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, tmp_cnt
-movl save_esi, %esi
-jmp for_shr3
-fin_shr3:
-movl $0, auxx
-movl %eax, auxx
 movl %esi, save_esi
 movl $1, %esi
 movl %esi, tmp_cnt
@@ -1432,23 +539,23 @@ movb tmp_dest+0, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+0
 cmpb $255, %al
-jne fin_dec6
+jne fin_dec4
 movb tmp_dest+1, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+1
 cmpb $255, %al
-jne fin_dec6
+jne fin_dec4
 movb tmp_dest+2, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+2
 cmpb $255, %al
-jne fin_dec6
+jne fin_dec4
 movb tmp_dest+3, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+3
 cmpb $255, %al
-jne fin_dec6
-fin_dec6:
+jne fin_dec4
+fin_dec4:
 movl save_eax, %eax
 movl save_edi, %edi
 movl %esi, save_esi
@@ -1457,93 +564,80 @@ movl %esi, tmp_cnt
 movl save_esi, %esi
 jmp for_shl2
 fin_shl2:
+movl rest, %eax
+cmpl tmp_src2, %eax
+jb fara_sub0
+movl %eax, save_eax
+movl %ebx, save_ebx
+movl %ecx, save_ecx
+movl %edi, save_edi
+movl $0, carryval
+movl $0, tmp_ans
 movl %esi, save_esi
-movl $1, %esi
-movl %esi, tmp_cnt
+movl tmp_src2, %esi
+movl %esi, tmp_src
 movl save_esi, %esi
-for_shl3:
-cmpl $0, tmp_cnt
-je fin_shl3
 movl %esi, save_esi
-movl curr2, %esi
+movl rest, %esi
 movl %esi, tmp_dest
 movl save_esi, %esi
-movl %edi, save_edi
-movl %ecx, save_ecx
-movl %eax, save_eax
-movl $shl_table, %edi
+movl carryval, %ebx
+movl subp(, %ebx, 4), %edi
 movl $0, %ecx
-movl $0, %eax
-movl $0, tmp_ans
+movb tmp_src+0, %cl
 movb tmp_dest+0, %ch
 movb (%edi, %ecx), %al
 movb %al, tmp_ans+0
+movl carry_subp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl carryval, %ebx
+movl subp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+1, %cl
 movb tmp_dest+1, %ch
-movb tmp_dest+0, %cl
 movb (%edi, %ecx), %al
 movb %al, tmp_ans+1
+movl carry_subp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl carryval, %ebx
+movl subp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+2, %cl
 movb tmp_dest+2, %ch
-movb tmp_dest+1, %cl
 movb (%edi, %ecx), %al
 movb %al, tmp_ans+2
+movl carry_subp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl carryval, %ebx
+movl subp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+3, %cl
 movb tmp_dest+3, %ch
-movb tmp_dest+2, %cl
 movb (%edi, %ecx), %al
 movb %al, tmp_ans+3
+movl carry_subp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
 movl save_eax, %eax
+movl save_ebx, %ebx
 movl save_ecx, %ecx
 movl save_edi, %edi
 movl %esi, save_esi
 movl tmp_ans, %esi
-movl %esi, curr2
+movl %esi, rest
 movl save_esi, %esi
-movl %edi, save_edi
-movl %eax, save_eax
-movl $dec_table, %edi
-movl %esi, save_esi
-movl tmp_cnt, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl $0, tmp_ans
-movl $0, %eax
-movb tmp_dest+0, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+0
-cmpb $255, %al
-jne fin_dec7
-movb tmp_dest+1, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+1
-cmpb $255, %al
-jne fin_dec7
-movb tmp_dest+2, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+2
-cmpb $255, %al
-jne fin_dec7
-movb tmp_dest+3, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+3
-cmpb $255, %al
-jne fin_dec7
-fin_dec7:
-movl save_eax, %eax
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, tmp_cnt
-movl save_esi, %esi
-jmp for_shl3
-fin_shl3:
 movl %eax, save_eax
 movl %ecx, save_ecx
 movl %edi, save_edi
 movl %esi, save_esi
-movl auxx, %esi
+movl $1, %esi
 movl %esi, tmp_src
 movl save_esi, %esi
 movl %esi, save_esi
-movl curr2, %esi
+movl curr1, %esi
 movl %esi, tmp_dest
 movl save_esi, %esi
 movl $0, tmp_ans
@@ -1570,86 +664,9 @@ movl save_ecx, %ecx
 movl save_eax, %eax
 movl %esi, save_esi
 movl tmp_ans, %esi
-movl %esi, curr2
+movl %esi, curr1
 movl save_esi, %esi
-movl %esi, save_esi
-movl $1, %esi
-movl %esi, tmp_cnt
-movl save_esi, %esi
-for_shr4:
-cmpl $0, tmp_cnt
-je fin_shr4
-movl %esi, save_esi
-movl tmp_src2, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl %edi, save_edi
-movl %ecx, save_ecx
-movl %eax, save_eax
-movl $shr_table, %edi
-movl $0, %ecx
-movl $0, %eax
-movl $0, tmp_ans
-movb tmp_dest+3, %ch
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movb tmp_dest+2, %ch
-movb tmp_dest+3, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movb tmp_dest+1, %ch
-movb tmp_dest+2, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movb tmp_dest+0, %ch
-movb tmp_dest+1, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movl save_eax, %eax
-movl save_ecx, %ecx
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, tmp_src2
-movl save_esi, %esi
-movl %edi, save_edi
-movl %eax, save_eax
-movl $dec_table, %edi
-movl %esi, save_esi
-movl tmp_cnt, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl $0, tmp_ans
-movl $0, %eax
-movb tmp_dest+0, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+0
-cmpb $255, %al
-jne fin_dec8
-movb tmp_dest+1, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+1
-cmpb $255, %al
-jne fin_dec8
-movb tmp_dest+2, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+2
-cmpb $255, %al
-jne fin_dec8
-movb tmp_dest+3, %al
-movb (%edi, %eax), %al
-movb %al, tmp_ans+3
-cmpb $255, %al
-jne fin_dec8
-fin_dec8:
-movl save_eax, %eax
-movl save_edi, %edi
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, tmp_cnt
-movl save_esi, %esi
-jmp for_shr4
-fin_shr4:
+fara_sub0:
 movl %edi, save_edi
 movl %eax, save_eax
 movl $inc_table, %edi
@@ -1663,37 +680,34 @@ movb tmp_dest+0, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+0
 cmpb $0, %al
-jne fin_inc1
+jne fin_inc0
 movb tmp_dest+1, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+1
 cmpb $0, %al
-jne fin_inc1
+jne fin_inc0
 movb tmp_dest+2, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+2
 cmpb $0, %al
-jne fin_inc1
+jne fin_inc0
 movb tmp_dest+3, %al
 movb (%edi, %eax), %al
 movb %al, tmp_ans+3
 cmpb $0, %al
-jne fin_inc1
-fin_inc1:
+jne fin_inc0
+fin_inc0:
 movl save_eax, %eax
 movl save_edi, %edi
 movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, tmp_cnt2
 movl save_esi, %esi
-jmp for_mul1
-fin_mul1:
-movl mul_ans1, %eax
-movl mul_ans2, %edx
-movl %eax, base
-jmp et_while
+jmp for_div0
+je fin_div0:
+movl curr1, %eax
+movl rest, %edx
 
-et_final:
 movl %eax, save_eax
 movl %ebx, save_ebx
 movl %ecx, save_ecx
@@ -1756,7 +770,10 @@ movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, %esp
 movl save_esi, %esi
-movl %ecx, 0(%esp)
+movl %esi, save_esi
+movl %eax, %esi
+movl %esi, 0(%esp)
+movl save_esi, %esi
 movl %eax, save_eax
 movl %ebx, save_ebx
 movl %ecx, save_ecx
@@ -1819,7 +836,206 @@ movl %esi, save_esi
 movl tmp_ans, %esi
 movl %esi, %esp
 movl save_esi, %esi
-movl $fs, 0(%esp)
+movl %esi, save_esi
+movl $fs, %esi
+movl %esi, 0(%esp)
+movl save_esi, %esi
+call printf
+movl %eax, save_eax
+movl %ebx, save_ebx
+movl %ecx, save_ecx
+movl %edi, save_edi
+movl $0, carryval
+movl $0, tmp_ans
+movl %esi, save_esi
+movl $8, %esi
+movl %esi, tmp_src
+movl save_esi, %esi
+movl %esi, save_esi
+movl %esp, %esi
+movl %esi, tmp_dest
+movl save_esi, %esi
+movl carryval, %ebx
+movl addp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+0, %cl
+movb tmp_dest+0, %ch
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+0
+movl carryp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl carryval, %ebx
+movl addp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+1, %cl
+movb tmp_dest+1, %ch
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+1
+movl carryp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl carryval, %ebx
+movl addp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+2, %cl
+movb tmp_dest+2, %ch
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+2
+movl carryp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl carryval, %ebx
+movl addp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+3, %cl
+movb tmp_dest+3, %ch
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+3
+movl carryp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl save_eax, %eax
+movl save_ebx, %ebx
+movl save_ecx, %ecx
+movl save_edi, %edi
+movl %esi, save_esi
+movl tmp_ans, %esi
+movl %esi, %esp
+movl save_esi, %esi
+
+movl %eax, save_eax
+movl %ebx, save_ebx
+movl %ecx, save_ecx
+movl %edi, save_edi
+movl $0, carryval
+movl $0, tmp_ans
+movl %esi, save_esi
+movl $4, %esi
+movl %esi, tmp_src
+movl save_esi, %esi
+movl %esi, save_esi
+movl %esp, %esi
+movl %esi, tmp_dest
+movl save_esi, %esi
+movl carryval, %ebx
+movl subp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+0, %cl
+movb tmp_dest+0, %ch
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+0
+movl carry_subp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl carryval, %ebx
+movl subp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+1, %cl
+movb tmp_dest+1, %ch
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+1
+movl carry_subp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl carryval, %ebx
+movl subp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+2, %cl
+movb tmp_dest+2, %ch
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+2
+movl carry_subp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl carryval, %ebx
+movl subp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+3, %cl
+movb tmp_dest+3, %ch
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+3
+movl carry_subp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl save_eax, %eax
+movl save_ebx, %ebx
+movl save_ecx, %ecx
+movl save_edi, %edi
+movl %esi, save_esi
+movl tmp_ans, %esi
+movl %esi, %esp
+movl save_esi, %esi
+movl %esi, save_esi
+movl %edx, %esi
+movl %esi, 0(%esp)
+movl save_esi, %esi
+movl %eax, save_eax
+movl %ebx, save_ebx
+movl %ecx, save_ecx
+movl %edi, save_edi
+movl $0, carryval
+movl $0, tmp_ans
+movl %esi, save_esi
+movl $4, %esi
+movl %esi, tmp_src
+movl save_esi, %esi
+movl %esi, save_esi
+movl %esp, %esi
+movl %esi, tmp_dest
+movl save_esi, %esi
+movl carryval, %ebx
+movl subp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+0, %cl
+movb tmp_dest+0, %ch
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+0
+movl carry_subp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl carryval, %ebx
+movl subp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+1, %cl
+movb tmp_dest+1, %ch
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+1
+movl carry_subp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl carryval, %ebx
+movl subp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+2, %cl
+movb tmp_dest+2, %ch
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+2
+movl carry_subp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl carryval, %ebx
+movl subp(, %ebx, 4), %edi
+movl $0, %ecx
+movb tmp_src+3, %cl
+movb tmp_dest+3, %ch
+movb (%edi, %ecx), %al
+movb %al, tmp_ans+3
+movl carry_subp(, %ebx, 4), %edi
+movb (%edi, %ecx), %al
+movb %al, carryval+0
+movl save_eax, %eax
+movl save_ebx, %ebx
+movl save_ecx, %ecx
+movl save_edi, %edi
+movl %esi, save_esi
+movl tmp_ans, %esi
+movl %esi, %esp
+movl save_esi, %esi
+movl %esi, save_esi
+movl $fs, %esi
+movl %esi, 0(%esp)
+movl save_esi, %esi
 call printf
 movl %eax, save_eax
 movl %ebx, save_ebx
