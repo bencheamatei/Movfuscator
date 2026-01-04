@@ -286,8 +286,15 @@ def write_pop(dest):
     write_add("$4", "%esp")
 
 def write_push(src):
-    write_sub("$4", "%esp")
-    fout.write(f"movl {src}, 0(%esp)"+"\n")
+    if src=="%esi":
+        write_sub("$4","%esp")
+        fout.write(f"movl {src}, 0(%esp)"+"\n")
+    else:
+        write_sub("$4","%esp")
+        save_reg("esi")
+        fout.write(f"movl {src}, %esi\n")
+        fout.write("movl %esi, 0(%esp)\n")
+        get_reg("esi")
 
 def write_lea(src, dest):
     fout.write(f"movl ${src}, {dest}"+"\n")
@@ -665,16 +672,7 @@ def main():
 
                 a=line.strip().lstrip()
                 write_mul(a)
-            elif line[:3]=="div" or line[:4]=="divl":
-                if line[:4]=="divl":
-                    line=line[4:]
-                else:
-                    line=line[3:]
-
-                a=line.strip().lstrip()
-                write_div(a) 
             else:
-                print(line)
                 fout.write(line+"\n")
 
 main()
