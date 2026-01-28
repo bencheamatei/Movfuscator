@@ -1,9 +1,9 @@
 # Movfuscator-Proiect-ASC
 
 ## Echipa
-- Benchea Matei - Grupa 152
+- Benchea Matei - grupa 152
 
-- Mitoceanu Ciprian - Grupa 152
+- Mitoceanu Ciprian - grupa 152
 
 ## Referințe
 
