@@ -11,3 +11,4 @@
 - https://www.youtube.com/watch?v=hsNDLVUzYEs
 - https://www.youtube.com/watch?v=wiFI5cqE49g
 - https://github.com/xoreaxeaxeax/movfuscator
+- https://github.com/LeetArxiv/ImplementedPapers/blob/main/mov-is-turing-complete.pdf
