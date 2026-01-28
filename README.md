@@ -5,6 +5,14 @@
 
 - Mitoceanu Ciprian - grupa 152
 
+## Funcționalitate generală
+
+## Structură
+
+## Cum se rulează?
+
+## Limitări
+
 ## Referințe
 
 - https://www.youtube.com/watch?v=RPQD7-AOjMI
