@@ -605,9 +605,7 @@ def write_data_additionals():
     fout.write("tmp_cnt2: .space 4\n")
     fout.write("tmp_src2: .space 4\n")
     fout.write("tmp_div: .space 4\n")
-
-lista_magica_operatii=["xor", "not", "or", "and", "inc", "dec", "add", "sub", "div", "mul", "shr", "shl"]
-misc=["loop", "push", "pop", "pushl", "popl"]
+    fout.write("rest: .space 4\n")
 
 def parse_line(line):
     # first of all vreau sa scot comentariile 
