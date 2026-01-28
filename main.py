@@ -6,8 +6,20 @@ if len(sys.argv)<2:
 
 assembly_file=sys.argv[1]
 fin=open(assembly_file,"r")
-fout=open(assembly_file[:-2]+"_mov.s","w")
-cnt={} # counter de etichete
+# o sa se accepte doar fisiere cu extensia .s sau .asm
+
+sname=""
+if assembly_file[-3:]=="asm":
+    sname=assembly_file[:-3]+"_mov.asm"
+elif assembly_file[-1:]=="s":
+    sname=assembly_file[:-1]+"_mov.s"
+else:
+    print("Se accepta doar fisiere cu extensia .s sau .asm")
+    exit(0)
+
+fout=open(sname, "w")
+
+cnt={} # counter de etichete (sa nu refolosesc)
 
 def save_reg(reg):
     fout.write(f"movl %{reg}, save_{reg}"+"\n")
@@ -100,7 +112,6 @@ def write_or(src,dest):
         fout.write(f"movb tmp_dest+{i}, %cl"+"\n")
         fout.write(f"movb (%edi, %ecx), %al"+"\n")
         fout.write(f"movb %al, tmp_ans+{i}"+"\n")
-
     get_reg("edi")
     get_reg("ecx")  
     get_reg("eax")
@@ -283,11 +294,11 @@ def write_sub(src,dest):
 
 def write_pop(dest):
     if dest=="%esi":
-        fout.write(f"movl 0(%esp), %esi")
+        fout.write(f"movl 0(%esp), %esi\n")
     else:
         save_reg("esi")
-        fout.write(f"movl 0(%esp), %esi")
-        fout.write(f"movl %esi, {dest}")
+        fout.write(f"movl 0(%esp), %esi\n")
+        fout.write(f"movl %esi, {dest}\n")
         get_reg("esi")
     write_add("$4", "%esp")
 
@@ -408,7 +419,6 @@ def write_shr(nr,dest):
     fout.write("cmpl $0, tmp_cnt\n")
     fout.write("je fin_shr"+str(cnt["shr"])+"\n")
 
-    #logica aici
     shiftr_by_1(dest)
 
     write_dec("tmp_cnt")
