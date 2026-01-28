@@ -5,4 +5,9 @@
 
 - Mitoceanu Ciprian - Grupa 152
 
-momentan am aritmetica pe 32 de biti (fara mul si div si shifturi)
+## Referințe
+
+- https://www.youtube.com/watch?v=RPQD7-AOjMI
+- https://www.youtube.com/watch?v=hsNDLVUzYEs
+- https://www.youtube.com/watch?v=wiFI5cqE49g
+- https://github.com/xoreaxeaxeax/movfuscator
