@@ -36,52 +36,15 @@ tmp_cnt2: .space 4
 tmp_src2: .space 4
 tmp_div: .space 4
 restumeu: .space 4
-str1: .ascii "ASC"
-str2: .ascii "FMI"
+helloWorld: .asciz "Hello, world!\n"
 .text
 .global main
 main:
 mov $4, %eax
 mov $1, %ebx
-mov $str1, %ecx
-mov $5, %edx
+mov $helloWorld, %ecx
+mov $15, %edx
 int $0x80
-movl $1, %eax
-movl %eax, save_eax
-movl %ecx, save_ecx
-movl %edi, save_edi
-movl %esi, save_esi
-movl %ebx, %esi
-movl %esi, tmp_src
-movl save_esi, %esi
-movl %esi, save_esi
-movl %ebx, %esi
-movl %esi, tmp_dest
-movl save_esi, %esi
-movl $0, tmp_ans
-movl $xor_table, %edi
-movl $0, %ecx
-movb tmp_src+0, %ch
-movb tmp_dest+0, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+0
-movb tmp_src+1, %ch
-movb tmp_dest+1, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+1
-movb tmp_src+2, %ch
-movb tmp_dest+2, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+2
-movb tmp_src+3, %ch
-movb tmp_dest+3, %cl
-movb (%edi, %ecx), %al
-movb %al, tmp_ans+3
-movl save_edi, %edi
-movl save_ecx, %ecx
-movl save_eax, %eax
-movl %esi, save_esi
-movl tmp_ans, %esi
-movl %esi, %ebx
-movl save_esi, %esi
+mov $1, %eax
+mov $0, %ebx
 int $0x80

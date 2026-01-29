@@ -35,7 +35,7 @@ aux: .space 4
 tmp_cnt2: .space 4
 tmp_src2: .space 4
 tmp_div: .space 4
-rest: .space 4
+restumeu: .space 4
 n: .long 9
 v: .long 12, 15, 5, 15, 4, 1, 7, 15, 1
 maxim: .long 0

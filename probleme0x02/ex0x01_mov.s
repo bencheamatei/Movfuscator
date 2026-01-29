@@ -35,7 +35,7 @@ aux: .space 4
 tmp_cnt2: .space 4
 tmp_src2: .space 4
 tmp_div: .space 4
-rest: .space 4
+restumeu: .space 4
 str1: .ascii "ASC"
 str2: .long 0X31323334
 .text

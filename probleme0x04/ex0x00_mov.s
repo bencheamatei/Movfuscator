@@ -35,7 +35,7 @@ aux: .space 4
 tmp_cnt2: .space 4
 tmp_src2: .space 4
 tmp_div: .space 4
-rest: .space 4
+restumeu: .space 4
 n: .long 6
 v: .word 10, 20, 40, 60, 100, 5
 .text
