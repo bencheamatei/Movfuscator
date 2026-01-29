@@ -31,7 +31,7 @@ Tot în directorul curent se va crea astfel un nou fișier cu numele _**nume_mov
 
 ## Limitări
 
-Implementarea noastră a movfuscatorului nu convertește instrucțiunile de jump (implicit de compare), iar operațiile artimetice și logice trebuie să fie realizate cu operanzi pe 32 de biți (i.e. nu se pot folosi regiștrii de tipul %al, %ax pentru operații aritmetice sau logice).
+Implementarea noastră a movfuscatorului nu convertește instrucțiunile de jump (implicit de compare), iar operațiile artimetice și logice trebuie să fie realizate cu operanzi pe 32 de biți (i.e. nu se pot folosi regiștrii de tipul %al, %ax pentru operații aritmetice sau logice). Nu sunt implementate nici variațiile "cu semn" ale unor operații de bază (idiv, imul, sal etc).
 
 ## Referințe
 
