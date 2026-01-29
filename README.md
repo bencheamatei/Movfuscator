@@ -11,6 +11,8 @@
 
 ## Cum se rulează?
 
+În directorul de lucru curent trebuie să descărcați _**main.py**_ și _**lookup_generator.py**_. Pentru început trebuie rulat _**lookup_generator.py**_  `python3 lookup_generator.py`, acesta va genera în directorul curent fișierul bin, care conține toate fișierele binare de lookup necesare rulării.
+
 ## Limitări
 
 ## Referințe
