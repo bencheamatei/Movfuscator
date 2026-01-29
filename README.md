@@ -20,7 +20,7 @@ Implementarea noastră a movfuscatorului convertește în 'cod movfuscat' un fi�
 
 ## Cum se rulează?
 
-În directorul de lucru curent trebuie să descărcați fișierele [```main.py```](./main.py) și [```lookup_generator.py```](./lookup_generator.py). În primul rând trebuie rulat ```lookup_generator.py```, acesta va genera un director _**bin_mov**_ în care se vor găsi fișierele binare de lookup (alternativ se poate descărca direct folderul [bin_mov](./bin)). Să spunem acum că vrem să rulăm movfuscatorul pentru fișierul _**nume.s**_ (se acceptă doar extensia .s) care se află în directorul de lucru curent. Ca să realzăm acest lucru trebuie să rulăm ```main.py``` cu _**nume.s**_ drept primul argument în linia de comandă.
+În directorul de lucru curent trebuie să descărcați fișierele [```main.py```](./main.py) și [```lookup_generator.py```](./lookup_generator.py). În primul rând trebuie rulat ```lookup_generator.py```, acesta va genera un director _**bin_mov**_ în care se vor găsi fișierele binare de lookup (alternativ se poate descărca direct folderul [bin_mov](./bin_mov)). Să spunem acum că vrem să rulăm movfuscatorul pentru fișierul _**nume.s**_ (se acceptă doar extensia .s) care se află în directorul de lucru curent. Ca să realzăm acest lucru trebuie să rulăm ```main.py``` cu _**nume.s**_ drept primul argument în linia de comandă.
 
 De exemplu:
 ```bash
