@@ -1,6 +1,6 @@
 # Movfuscator-Proiect-ASC
 
-## Echipa
+## Echipa McMov
 - Benchea Matei - grupa 152
 
 - Mitoceanu Ciprian - grupa 152
