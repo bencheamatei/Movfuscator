@@ -9,7 +9,7 @@ fin=open(assembly_file,"r")
 # o sa se accepte doar fisiere cu extensia .s sau .asm
 
 sname=""
-if assembly_file[-1:]=="s":
+if assembly_file[-2:]==".s":
     sname=assembly_file[:-2]+"_mov.s"
 else:
     print("Se accepta doar fisiere cu extensia .s")
