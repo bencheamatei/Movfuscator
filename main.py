@@ -10,9 +10,9 @@ fin=open(assembly_file,"r")
 
 sname=""
 if assembly_file[-3:]=="asm":
-    sname=assembly_file[:-3]+"_mov.asm"
+    sname=assembly_file[:-4]+"_mov.asm"
 elif assembly_file[-1:]=="s":
-    sname=assembly_file[:-1]+"_mov.s"
+    sname=assembly_file[:-2]+"_mov.s"
 else:
     print("Se accepta doar fisiere cu extensia .s sau .asm")
     exit(0)
@@ -528,7 +528,7 @@ def write_div(op):
 
     fout.write("movl %eax, curr1\n")
     fout.write("movl %edx, curr2\n")
-    fout.write("movl $0, rest\n")
+    fout.write("movl $0, restumeu\n")
     fout.write("movl $0, tmp_cnt2\n")
     fout.write("for_div"+str(cnt["div"])+":\n")
     fout.write("cmpl $64, tmp_cnt2\n")
@@ -544,19 +544,19 @@ def write_div(op):
     write_shr("$7", "%eax")
     fout.write("movb %al, auxx\n")
 
-    write_shl("$1", "rest")
-    write_or("aux", "rest")
+    write_shl("$1", "restumeu")
+    write_or("aux", "restumeu")
 
     write_shl("$1", "curr2")
     write_or("auxx", "curr2")
 
     write_shl("$1", "curr1")
 
-    fout.write("movl rest, %eax\n")
+    fout.write("movl restumeu, %eax\n")
     fout.write("cmpl tmp_src2, %eax\n")
     fout.write("jb fara_sub"+str(cnt["div"])+"\n")
 
-    write_sub("tmp_src2", "rest")
+    write_sub("tmp_src2", "restumeu")
     write_or("$1", "curr1")
 
     fout.write("fara_sub"+str(cnt["div"])+":\n")
@@ -564,7 +564,7 @@ def write_div(op):
     fout.write("jmp for_div"+str(cnt["div"])+"\n")
     fout.write("fin_div"+str(cnt["div"])+":\n")
     fout.write("movl curr1, %eax\n")
-    fout.write("movl rest, %edx\n")
+    fout.write("movl restumeu, %edx\n")
     cnt["div"]+=1
 
 def write_data_additionals():
@@ -605,7 +605,24 @@ def write_data_additionals():
     fout.write("tmp_cnt2: .space 4\n")
     fout.write("tmp_src2: .space 4\n")
     fout.write("tmp_div: .space 4\n")
-    fout.write("rest: .space 4\n")
+    fout.write("restumeu: .space 4\n")
+
+
+def get_2_arguments(line): 
+    # am descoperit un mic bug la testing 
+    # nu pot pur si simplu sa fac split dupa , 
+    keypos=-1
+    inParanteze=0 
+    for i in range(len(line)):
+        if line[i]=="," and inParanteze==0:
+            keypos=i
+            break 
+        if line[i]=="(":
+            inParanteze+=1 
+        if line[i]==")":
+            inParanteze-=1
+    
+    return (line[:keypos],line[keypos+1:])
 
 def parse_line(line):
     # first of all vreau sa scot comentariile 
@@ -630,17 +647,17 @@ def parse_line(line):
     ce=line[len(op):]
 
     if op[:3]=="xor":
-        a,b=ce.split(",")
+        a,b=get_2_arguments(ce)
         a=a.strip()
         b=b.strip()
         write_xor(a,b)
     elif op[:3]=="and":
-        a,b=ce.split(",")
+        a,b=get_2_arguments(ce)
         a=a.strip()
         b=b.strip()
         write_and(a,b)
     elif op[:2]=="or":
-        a,b=ce.split(",")
+        a,b=get_2_arguments(ce)
         a=a.strip()
         b=b.strip()
         write_or(a,b)
@@ -654,12 +671,12 @@ def parse_line(line):
         a=ce.strip()
         write_dec(a)
     elif op[:3]=="add":
-        a,b=ce.split(",")
+        a,b=get_2_arguments(ce)
         a=a.strip()
         b=b.strip()
         write_add(a,b)
     elif op[:3]=="sub":
-        a,b=ce.split(",")
+        a,b=get_2_arguments(ce)
         a=a.strip()
         b=b.strip()
         write_sub(a,b)
@@ -673,12 +690,12 @@ def parse_line(line):
         label=ce.strip()
         write_loop(label)
     elif op[:3]=="shl":
-        a,b=ce.split(",")
+        a,b=get_2_arguments(ce)
         a=a.strip()
         b=b.strip()
         write_shl(a,b) 
     elif op[:3]=="shr":
-        a,b=ce.split(",")
+        a,b=get_2_arguments(ce)
         a=a.strip()
         b=b.strip()
         write_shr(a,b) 
