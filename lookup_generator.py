@@ -1,6 +1,6 @@
 from pathlib import Path
 
-pth=Path("bin")
+pth=Path("bin_mov")
 pth.mkdir(parents=True, exist_ok=True)
 
 def genxor():
@@ -134,3 +134,4 @@ genadd()
 gensub()
 genshl()
 genshr()
+
