@@ -2,10 +2,9 @@
 .text
 .global main
 main:
-    movl $0b11011111111110111111, %eax; 0b este folosit pentru baza 2
+    movl $0b11011111111110111111, %eax
     xorl %ebx, %ebx
-    xorl %ecx, %ecx ; daca aplicam xor intre o valoare si ea insasi, obtinem 0
-                    ; asadar, aceasta linie este echivalenta cu mov $0, %ecx
+    xorl %ecx, %ecx 
     movl $32, %edx
 et_loop:
     testl $1, %eax
@@ -24,6 +23,6 @@ et_zero:
     jmp et_next
 et_exit:
     movl %ebx, %eax
-    movl $1, %ebx
+    movl $0, %ebx
     movl $1, %eax
     int $0x80
