@@ -9,12 +9,10 @@ fin=open(assembly_file,"r")
 # o sa se accepte doar fisiere cu extensia .s sau .asm
 
 sname=""
-if assembly_file[-3:]=="asm":
-    sname=assembly_file[:-4]+"_mov.asm"
-elif assembly_file[-1:]=="s":
+if assembly_file[-1:]=="s":
     sname=assembly_file[:-2]+"_mov.s"
 else:
-    print("Se accepta doar fisiere cu extensia .s sau .asm")
+    print("Se accepta doar fisiere cu extensia .s")
     exit(0)
 
 fout=open(sname, "w")
@@ -570,7 +568,7 @@ def write_div(op):
 def write_data_additionals():
     for x in ["and", "or", "xor", "not", "inc", "dec", "add", "carry", "sub", "carry_sub", "shl", "shr", "mul", "div"]:
         if x!="mul" and x!="div":
-            fout.write(f"{x}_table: .incbin "+'"'+f"bin/{x}.bin"+'"'+"\n")
+            fout.write(f"{x}_table: .incbin "+'"'+f"bin_mov/{x}.bin"+'"'+"\n")
         if x!="carry" and x!="carry_sub":
             cnt[x]=0
 
