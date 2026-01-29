@@ -2,7 +2,7 @@
 
 ## Echipa McMov
 - Benchea Matei - grupa 152
-- Mitoceanu Ciprian - grupa 152
+- Mitoceanu Ciprian Minodor - grupa 152
 
 ## Funcționalitate generală
 
