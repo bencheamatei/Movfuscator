@@ -5,8 +5,7 @@
 main: 
     xorl %eax, %eax 
     addl $2317, %eax 
-    incl %eax 
-
+    addl $1, %eax
     pushl %eax 
     pushl $fstr 
     call printf 

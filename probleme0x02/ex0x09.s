@@ -4,7 +4,7 @@
 main:
     movl $0b11011111111110111111, %eax
     xorl %ebx, %ebx
-    xorl %ecx, %ecx 
+    xorl %ecx, %ecx
     movl $32, %edx
 et_loop:
     testl $1, %eax

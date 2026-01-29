@@ -1,16 +1,16 @@
 .data
-and_table: .incbin "bin/and.bin"
-or_table: .incbin "bin/or.bin"
-xor_table: .incbin "bin/xor.bin"
-not_table: .incbin "bin/not.bin"
-inc_table: .incbin "bin/inc.bin"
-dec_table: .incbin "bin/dec.bin"
-add_table: .incbin "bin/add.bin"
-carry_table: .incbin "bin/carry.bin"
-sub_table: .incbin "bin/sub.bin"
-carry_sub_table: .incbin "bin/carry_sub.bin"
-shl_table: .incbin "bin/shl.bin"
-shr_table: .incbin "bin/shr.bin"
+and_table: .incbin "bin_mov/and.bin"
+or_table: .incbin "bin_mov/or.bin"
+xor_table: .incbin "bin_mov/xor.bin"
+not_table: .incbin "bin_mov/not.bin"
+inc_table: .incbin "bin_mov/inc.bin"
+dec_table: .incbin "bin_mov/dec.bin"
+add_table: .incbin "bin_mov/add.bin"
+carry_table: .incbin "bin_mov/carry.bin"
+sub_table: .incbin "bin_mov/sub.bin"
+carry_sub_table: .incbin "bin_mov/carry_sub.bin"
+shl_table: .incbin "bin_mov/shl.bin"
+shr_table: .incbin "bin_mov/shr.bin"
 addp: .long add_table, add_table+65536
 carryp: .long carry_table, carry_table+65536
 carryval: .space 4
