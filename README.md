@@ -15,7 +15,7 @@ TODO
 
 ## Cum se rulează?
 
-În directorul de lucru curent trebuie să descărcați fișierele [```main.py```](./main.py) și [```lookup_generator.py```](./lookup_generator.py). În primul rând trebuie rulat [```lookup_generator.py```](./lookup_generator.py), acesta va genera un director _*bin*_ în care se vor găsi fișierele binare de lookup (alternativ se poate descărca direct folderul [_**bin**_](./bin)). Să spunem acum că vrem să rulăm movfuscatorul pentru fișierul _**nume.s**_ (este acceptată și extensia .asm) care se află în directorul de lucru curent. Ca să realzăm acest lucru trebuie să rulăm ```main.py``` cu _**nume.s**_ drept primul argument în linia de comandă.
+În directorul de lucru curent trebuie să descărcați fișierele [```main.py```](./main.py) și [```lookup_generator.py```](./lookup_generator.py). În primul rând trebuie rulat [```lookup_generator.py```](./lookup_generator.py), acesta va genera un director _**bin**_ în care se vor găsi fișierele binare de lookup (alternativ se poate descărca direct folderul [bin](./bin)). Să spunem acum că vrem să rulăm movfuscatorul pentru fișierul _**nume.s**_ (este acceptată și extensia .asm) care se află în directorul de lucru curent. Ca să realzăm acest lucru trebuie să rulăm ```main.py``` cu _**nume.s**_ drept primul argument în linia de comandă.
 
 De exemplu:
 ```bash
@@ -35,3 +35,5 @@ Implementarea noastră a movfuscatorului nu convertește instrucțiunile de jump
 - https://www.youtube.com/watch?v=wiFI5cqE49g
 - https://github.com/xoreaxeaxeax/movfuscator
 - https://github.com/LeetArxiv/ImplementedPapers/blob/main/mov-is-turing-complete.pdf
+- https://docs.oracle.com/cd/E19641-01/802-1948/802-1948.pdf
+- https://www.felixcloutier.com/x86/
